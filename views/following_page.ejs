@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/followers_page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Figtree:ital,wght@0,300..900;1,300..900&family=Lexend:wght@100..900&family=Outfit:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="left">
+            <a href="/">
+                <h1>EUROPA</h1>
+            </a>
+        </div>
+        <div class="right">
+            <a href="/newpost" id="create-post">NEW POST</a>
+            <a id="profile-icon" href="/myprofile">
+                <img src="<%= user.icon %>" alt="">
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="profile-info">
+            <img src="<%= user.icon %>" alt="">
+            <h2>
+                <%= user.fullname %>
+            </h2>
+            <div class="username">
+                <p>
+                    @<%= user.username %>
+                </p>
+            </div>
+            <p>
+                <%= user.bio %>
+            </p>
+            <div class="follow">
+                <a href="/myprofile/followers"> <%= user.followers.length%> Followers</a>
+                <a href="/myprofile/following"> <%= user.following.length%> Following</a>
+            </div>
+        </div>
+        <div class="sidebar-links">
+            <a href="/myprofile/edit">Edit Profile</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+
+    <div class="main">
+        <div class="followersbox">
+            <h1>Following</h1>
+            <div class="followers-list">
+                <!-- Begin followers loop here -->
+                <div class="followcard">
+                    <a href="" class="accountinfo">
+                        <img src="<%=user.icon%>" alt="">
+                        <h2>@username</h2>
+                    </a>
+                    <div class="buttons">
+                        <button>unfollow</button>
+                    </div>
+                </div>
+               
+                <div class="followcard">
+                    <a href="" class="accountinfo">
+                        <img src="<%=user.icon%>" alt="">
+                        <h2>@username</h2>
+                    </a>
+                    <div class="buttons">
+                        <button>unfollow</button>
+                    </div>
+                </div>
+                <div class="followcard">
+                    <a href="" class="accountinfo">
+                        <img src="<%=user.icon%>" alt="">
+                        <h2>@username</h2>
+                    </a>
+                    <div class="buttons">
+                        <button>unfollow</button>
+                    </div>
+                </div>
+                <div class="followcard">
+                    <a href="" class="accountinfo">
+                        <img src="<%=user.icon%>" alt="">
+                        <h2>@username</h2>
+                    </a>
+                    <div class="buttons">
+                        <button>unfollow</button>
+                    </div>
+                </div>
+                <div class="followcard">
+                    <a href="" class="accountinfo">
+                        <img src="<%=user.icon%>" alt="">
+                        <h2>@username</h2>
+                    </a>
+                    <div class="buttons">
+                        <button>unfollow</button>
+                    </div>
+                </div>
+                <div class="followcard">
+                    <a href="" class="accountinfo">
+                        <img src="<%=user.icon%>" alt="">
+                        <h2>@username</h2>
+                    </a>
+                    <div class="buttons">
+                        <button>unfollow</button>
+                    </div>
+                </div>
+                <!-- End followers loop here -->
+            </div>
+        </div>
+  
+
+    </div>
+
+
+    <script>
+        function toggleLike(button) {
+            const countSpan = button.nextElementSibling;
+            let count = parseInt(countSpan.textContent);
+            const liked = button.classList.toggle("liked");
+            countSpan.textContent = liked ? count + 1 : count - 1;
+        }
+    </script>
+</body>
+
+</html>

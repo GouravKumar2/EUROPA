@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/create_post.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Figtree:ital,wght@0,300..900;1,300..900&family=Lexend:wght@100..900&family=Outfit:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="left">
+            <a href="/">
+                <h1>EUROPA</h1>
+            </a>
+        </div>
+        <div class="right">
+            <a id="username" href="/profile">
+                <%= user.username %>
+            </a>
+            <a id="profile-icon" href="/myprofile">
+                <img src="<%= user.icon %>" alt="">
+            </a>
+        </div>
+    </nav>
+
+    <div class="main">
+
+        <form action="/create-post" method="POST">
+            <input type="hidden" name="cardColor" id="cardColorInput" value="#A881BF">
+
+            <div id="postCard" style="background-color: #A881BF;" class="card">
+                <div class="person-details">
+                    <div class="person-icon">
+                        <img src="<%= user.icon %>" alt="person" />
+                    </div>
+                    <div class="person-name"><%= user.username %></div>
+                </div>
+
+                <textarea name="content" id="content" placeholder="What's on your mind? " required></textarea>
+                <div id="charCount" style="text-align:right; font-size:0.9em;  color: #42242a; opacity: 0.7;">0/500 characters</div>
+
+                <div class="card-footer">
+                    <div class="color-picker">
+                        <div class="color-circle" data-color="#A881BF" style="background-color: #A881BF;"></div>
+                        <div class="color-circle" data-color="#219ebc" style="background-color: #219ebc;"></div>
+                        <div class="color-circle" data-color="#419D78" style="background-color: #419D78;"></div>
+                        <div class="color-circle" data-color="#ff5d8f" style="background-color: #ff5d8f;"></div>
+                        <div class="color-circle" data-color="#b08968" style="background-color: #b08968;"></div>
+                        <div class="color-circle" data-color="#ef476f" style="background-color: #ef476f;"></div>
+                        <div class="color-circle" data-color="#edc531" style="background-color: #edc531;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" id="submit">Publish Post</button>
+        </form>
+    </div>
+
+    </div>
+
+
+
+    <script>
+        const colorCircles = document.querySelectorAll('.color-circle');
+        const postCard = document.getElementById('postCard');
+        const colorInput = document.getElementById('cardColorInput');
+        const textarea = document.getElementById('content');
+        const charCount = document.getElementById('charCount');
+        const maxChars = 500;
+
+        colorCircles.forEach(circle => {
+            circle.addEventListener('click', () => {
+                const selectedColor = circle.getAttribute('data-color');
+                postCard.style.backgroundColor = selectedColor;
+                colorInput.value = selectedColor;
+            });
+        });
+
+        textarea.addEventListener('input', function () {
+            if (this.value.length > maxChars) {
+                this.value = this.value.slice(0, maxChars);
+            }
+            charCount.textContent = `${this.value.length}/${maxChars} characters`;
+        });
+    </script>
+
+
+</body>
+
+</html>

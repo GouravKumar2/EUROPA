@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/signup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Figtree:ital,wght@0,300..900;1,300..900&family=Lexend:wght@100..900&family=Outfit:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="left">
+            <h1>EUROPA</h1>
+        </div>
+        <div class="right">
+            <h2>Welcome!</h2>
+        </div>
+    </nav>
+
+    <div class="main">
+
+        <div class="info"></div>
+        <form action="/create-user" method="POST">
+                <div class="signup">
+                    <h2>Make an Account</h2>
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" id="fullname" name="fullname" required >
+
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required pattern="^[A-Za-z0-9._]+$" title="Username can only contain letters, numbers, dots, and underscores.">
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <% if (typeof userexists !== 'undefined' && userexists) { %>
+                        <p style="color: red; font-size: 0.9em; margin-top: 8px;">User already exists, Try Logging in</p>
+                    <% } %>
+                </div>
+                <div class="buttons">
+                    <button type="submit" id="signup-button">Sign Up</button>
+                    <a href="/login" id="login-button">Login Instead</a>
+                </div>
+        </form>
+    </div>
+</body>
+
+</html>

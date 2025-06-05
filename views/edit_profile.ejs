@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/edit_profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Figtree:ital,wght@0,300..900;1,300..900&family=Lexend:wght@100..900&family=Outfit:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="left">
+            <a href="/"><h1>EUROPA</h1></a>
+        </div>
+        <div class="right">
+            <a href="/newpost" id="create-post">NEW POST</a>
+            <a id="profile-icon" href="/myprofile">
+                <img src="<%= user.icon %>"
+                    alt="">
+            </a>
+        </div>
+    </nav>
+
+    <div class="main">
+
+        <form action="/update-profile" method="post">
+        <div class="sidebar">
+            <h2>
+                Update your Profile :
+            </h2>
+
+            <div class="icon-update">
+                <img src="<%= user.icon %>"
+                alt="">
+                <div class="icon-input">
+                    <label for="icon-url" >Profile Icon URL : </label>
+                    <input type="text" name="icon" id="icon" value="<%= user.icon %>">
+                </div>
+            </div>
+
+            <label for="username">Username : </label>
+            <input type="text" name="username" id="username" placeholder="Username" value="<%= user.username %>" required>
+            <label for="bio">Bio : </label>
+            <textarea name="bio" id="bio" placeholder="Bio" rows="4"><%= user.bio %></textarea>
+            <label for="email">Email :</label>
+            <input type="email" name="email" id="email" placeholder="Email" value="<%= user.email %>" required>
+
+            <div class="sidebar-links">
+                <button type="submit" class="submit">Update Profile</button>
+            </div>
+        </div>
+        </form>
+        
+        
+        
+    </div>
+</body>
+
+</html>

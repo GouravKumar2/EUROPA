@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Figtree:ital,wght@0,300..900;1,300..900&family=Lexend:wght@100..900&family=Outfit:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div class="left">
+            <h1>EUROPA</h1>
+        </div>
+        <div class="right">
+            <h2>Welcome Back!</h2>
+        </div>
+    </nav>
+
+    <div class="main">
+        <!-- The actual div names are from the sigup page that's why they are the same, but the functionality is different. -->
+
+        <div class="info"></div>
+        <form action="/login-user" method="POST">
+           
+                <div class="signup">
+                    <h2>Login with Details</h2>
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <% if (typeof usernotfound !== 'undefined' && usernotfound || typeof passwordwrong !== 'undefined' && passwordwrong) { %>
+                        <p style="color: red; font-size: 0.9em; margin-top: 8px;">Either username or password wrong</p>
+                    <% } %>
+                </div>
+                <div class="buttons">
+                    <button type="submit" id="signup-button">Login</button>
+                    <a href="/signup" id="login-button">Sign Up Instead</a>
+                </div>
+           
+        </form>
+    </div>
+</body>
+
+</html>

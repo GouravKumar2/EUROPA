@@ -1,0 +1,335 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #e7e4de;
+}
+
+a {
+    text-decoration: none;
+}
+
+nav{
+    width : 95%;
+    border-radius: 30px;
+    height: 60px;
+    background-color: #d1c2bc;
+    margin : 30px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position : sticky;
+    top : 30px;
+}
+
+nav .left{
+    display: flex;
+    align-items: center;
+}
+
+nav .left h1{
+    font-family: "Climate Crisis", sans-serif;
+    font-size: 30px;
+    color: #42242a;
+    letter-spacing: 2px;
+    margin-left: 30px;
+}
+
+nav .right {
+  display: flex;
+  align-items: center;
+  margin-right: 1vw;
+}
+
+#create-post {
+ width: 150px;
+ height: 40px;
+ background-color: #a881bf;
+ border-radius: 30px;
+ margin-right: 20px;
+ display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #42242a;
+    font-family: 'Figtree', sans-serif;
+    font-size: 16px;
+  font-weight: 700;
+}
+
+#profile-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #42242a;
+}
+
+#profile-icon img {
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#username {
+  font-family: "Space Mono", monospace;
+  font-size: 20px;
+  font-weight: 500;
+  color: #42242a;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+
+.sidebar{
+    width: 25vw;
+    
+    background-color: #a881bf;
+    border-radius: 30px;
+    position: fixed;
+    left: 2.5vw;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-evenly;
+    padding: 35px 20px 20px 20px;
+    box-sizing: border-box;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-info img {
+    width: 60%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 2px 10px rgba(66,36,42,0.08);
+    margin-bottom: 15px;
+}
+
+.profile-info h2 {
+    font-family: "Space Mono", monospace;
+    font-size: 26px;
+    color: #42242a;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.profile-info p {
+    font-family: 'Figtree', sans-serif;
+    font-size: 15px;
+    color: #42242a;
+    text-align: center;
+    margin-bottom: 10px;
+    opacity: 0.85;
+}
+
+.sidebar-links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+}
+
+.follow {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.follow a {
+    width: 48%;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    background: transparent;
+    border: 2px solid #42242a;
+    color: #fff;
+    font-family: 'Figtree', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-links a {
+    width: 100%;
+    height: 40px;
+    background-color: #fff;
+    color: #42242a;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Figtree', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    margin-bottom: 10px;
+    transition: background 0.2s, color 0.2s;
+}
+
+
+.main {
+    width: 65vw;
+    margin-left: 30vw;
+    margin-top: 30px;
+    
+}
+
+.your-posts-text{
+    width: 200px;
+    position: sticky;
+    top: 120px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color:  #42242a;
+    border-radius: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main h1 {
+    font-family: "Figtree", monospace;
+    font-size: 30px;
+    color : #e7e4de;
+}
+
+.posts{
+     width: 100%;
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     gap: 20px;
+}
+
+
+.card {
+  min-height: 200px;
+  background-color: #fb6f92;
+  border-radius: 30px;
+  padding: 20px;
+  font-family: "Figtree", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h2 {
+  font-size: 24px;
+  color: #2f1a1e;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #42242a;
+  margin-bottom: 10px;
+}
+
+.person-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.person-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.person-name {
+  font-weight: 600;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: auto;
+}
+
+.like-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.like-button {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.heart-filled {
+  display: none;
+}
+
+.like-button.liked .heart-outline {
+  display: none;
+}
+
+.like-button.liked .heart-filled {
+  display: inline;
+}
+
+.like-count {
+  color: #42242a;
+  font-family: "Figtree", monospace;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.delete-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.delete-button svg {
+  width: 30px;
+  height: 30px;
+  fill: #42242a;
+  cursor: pointer;
+  transition: fill 0.2s;
+}
+
+.delete-button svg:hover {
+  fill: #e74c3c;
+}
+
+.no-posts {
+  font-family: "Figtree", sans-serif;
+  font-size: 20px;
+  color: #4a3a3d;
+}

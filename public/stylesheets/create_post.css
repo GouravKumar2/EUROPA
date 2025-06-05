@@ -1,0 +1,189 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: #e7e4de;
+}
+
+nav {
+  width: 95%;
+  border-radius: 100px;
+  height: 60px;
+  background-color: #d1c2bc;
+  margin: 30px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 30px;
+}
+
+nav .left {
+  display: flex;
+  align-items: center;
+}
+
+nav .left h1 {
+  font-family: "Climate Crisis", sans-serif;
+  font-size: 30px;
+  color: #42242a;
+  letter-spacing: 2px;
+  margin-left: 30px;
+}
+
+nav .right {
+  display: flex;
+  align-items: center;
+  margin-right: 1vw;
+}
+
+#profile-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #42242a;
+}
+
+#profile-icon img {
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#username {
+  font-family: "Space Mono", monospace;
+  font-size: 20px;
+  font-weight: 500;
+  color: #42242a;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  margin-top: 20px;
+  width: 400px;
+  min-height: 200px;
+  background-color: #fb6f92;
+  border-radius: 30px;
+  padding: 20px;
+  font-family: "Figtree", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h2 {
+  font-size: 24px;
+  color: #2f1a1e;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #42242a;
+  margin-bottom: 10px;
+}
+
+.person-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.person-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.person-name {
+  font-weight: 600;
+}
+
+#content {
+  font-family: "Figtree", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #42242a;
+  margin-bottom: 10px;
+  background-color: transparent;
+  outline: none;
+  resize: none;
+  border: none;
+  height: 220px;
+}
+
+#content::placeholder {
+  color: #42242a;
+  opacity: 0.7;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: auto;
+}
+
+.like-count {
+  color: #42242a;
+  font-family: "Figtree", monospace;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.color-picker {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.color-circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.color-circle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+#submit{
+  font-family: "Figtree", sans-serif;
+ 
+  background-color: #42242a;
+  width: 100%;
+ margin-top: 20px;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}

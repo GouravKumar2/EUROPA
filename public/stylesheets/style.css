@@ -1,0 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: #e7e4de;
+}
+
+nav {
+  width: 95%;
+  border-radius: 100px;
+  height: 60px;
+  background-color: #d1c2bc;
+  margin: 30px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top : 30px;
+}
+
+nav .left {
+  display: flex;
+  align-items: center;
+}
+
+nav .left h1 {
+  font-family: "Climate Crisis", sans-serif;
+  font-size: 30px;
+  color: #42242a;
+  letter-spacing: 2px;
+  margin-left: 30px;
+}
+
+nav .right {
+  display: flex;
+  align-items: center;
+  margin-right: 1vw;
+}
+
+#create-post {
+ width: 150px;
+ height: 40px;
+ background-color: #a881bf;
+ border-radius: 30px;
+ margin-right: 20px;
+ display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #42242a;
+    font-family: 'Figtree', sans-serif;
+    font-size: 16px;
+  font-weight: 700;
+}
+
+#profile-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #42242a;
+}
+
+#profile-icon img {
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#username {
+  font-family: "Space Mono", monospace;
+  font-size: 20px;
+  font-weight: 500;
+  color: #42242a;
+  margin-right: 15px;
+  text-decoration: none;
+}
+
+.main {
+  width: 95%;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .main {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  min-height: 200px;
+  background-color: #fb6f92;
+  border-radius: 30px;
+  padding: 20px;
+  font-family: "Figtree", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h2 {
+  font-size: 24px;
+  color: #2f1a1e;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #42242a;
+  margin-bottom: 10px;
+}
+
+.person-details {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.person-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.person-name {
+  font-weight: 600;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: auto;
+}
+
+.like-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.like-button {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.heart-filled {
+  display: none;
+}
+
+.like-button.liked .heart-outline {
+  display: none;
+}
+
+.like-button.liked .heart-filled {
+  display: inline;
+}
+
+.like-count {
+  color: #42242a;
+  font-family: "Figtree", monospace;
+  font-size: 22px;
+  font-weight: bold;
+}

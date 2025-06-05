@@ -210,6 +210,31 @@ app.get('/profile/:username/following', isLoggedIn, async (req, res) => {
     res.render('other_following', { user: req.user, following: following, otheruser: otheruser });
 });
 
+app.post('/toggle-like/:postId', isLoggedIn, async (req, res) => {
+    try {
+        const post = await postModel.findById(req.params.postId);
+        const userId = req.user._id;
+
+        if (!post) return res.status(404).send('Post not found');
+
+        const index = post.likes.indexOf(userId);
+        if (index === -1) {
+            post.likes.push(userId);
+            post.likesCount += 1;
+        } else {
+            post.likes.splice(index, 1);
+            post.likesCount -= 1;
+        }
+
+        await post.save();
+        res.status(200).send('OK');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error toggling like');
+    }
+});
+
+
 function isLoggedIn(req, res, next) {
     let token = req.cookies.token;
     if (token) {

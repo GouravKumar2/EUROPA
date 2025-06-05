@@ -86,7 +86,7 @@
                     </p>
                     <div class="card-footer">
                         <div class="like-container">
-                            <button class="like-button" onclick="toggleLike(this)">
+                            <button class="like-button <%= post.likes.includes(user._id) ? 'liked' : '' %>" onclick="toggleLike(this, '<%= post._id %>')">
                                 <!-- Unliked (outlined heart) -->
                                 <svg class="heart-outline" xmlns="http://www.w3.org/2000/svg" height="30px"
                                     viewBox="0 -960 960 960" width="30px" fill="#42242a">
@@ -118,14 +118,33 @@
     </div>
 
 
-     <script>
-        function toggleLike(button) {
-            const countSpan = button.nextElementSibling;
-            let count = parseInt(countSpan.textContent);
-            const liked = button.classList.toggle("liked");
-            countSpan.textContent = liked ? count + 1 : count - 1;
+    <script>
+    async function toggleLike(button, postId) {
+        const countSpan = button.nextElementSibling;
+        let count = parseInt(countSpan.textContent);
+        const liked = button.classList.toggle("liked");
+        countSpan.textContent = liked ? count + 1 : count - 1;
+
+        try {
+            const res = await fetch(`/toggle-like/${postId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!res.ok) {
+                throw new Error('Failed to toggle like');
+            }
+        } catch (err) {
+            console.error(err);
+            // Revert UI change on error
+            button.classList.toggle("liked");
+            countSpan.textContent = liked ? count : count - 1;
         }
-    </script>
+    }
+</script>
+
 </body>
 
 </html>

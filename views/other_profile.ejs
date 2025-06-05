@@ -45,8 +45,12 @@
                 <%= otheruser.bio %>
             </p>
             <div class="follow">
-                <a href="/profile/<%=otheruser.username%>/followers"> <%= otheruser.followers.length%> Followers</a>
-                <a href="/profile/<%=otheruser.username%>/following"> <%= otheruser.following.length%> Following</a>
+                <a href="/profile/<%=otheruser.username%>/followers">
+                    <%= otheruser.followers.length%> Followers
+                </a>
+                <a href="/profile/<%=otheruser.username%>/following">
+                    <%= otheruser.following.length%> Following
+                </a>
             </div>
         </div>
         <div class="sidebar-links">
@@ -60,67 +64,89 @@
             <h1>Posts : </h1>
         </div>
 
-        <% if (userposts.length === 0) { %>
+        <% if (userposts.length===0) { %>
             <div class="no-posts">
                 <p>You have not created any posts yet.</p>
             </div>
-        <% } %>
-        <div class="posts">
+            <% } %>
+                <div class="posts">
 
 
-            <% userposts.forEach(function(post) { %>
+                    <% userposts.forEach(function(post) { %>
 
-                <div class="card" style= "background-color: <%= post.cardColor %>;">
-                    <div class="person-details">
-                        <div class="person-icon">
-                            <img src="<%=otheruser.icon%>" alt="person" />
+                        <div class="card" style="background-color: <%= post.cardColor %>;">
+                            <div class="person-details">
+                                <div class="person-icon">
+                                    <img src="<%=otheruser.icon%>" alt="person" />
+                                </div>
+                                <div class="person-name">
+                                    @<%=otheruser.username%>
+                                </div>
+                            </div>
+                            <!-- <h2>Post Title</h2> -->
+                            <p>
+                            <p style="white-space: pre-line;">
+                                <%= post.content %>
+                            </p>
+                            </p>
+                            <div class="card-footer">
+                                <div class="like-container">
+                                    <button class="like-button <%= post.likes.includes(user._id) ? 'liked' : '' %>"
+                                        onclick="toggleLike(this, '<%= post._id %>')">
+                                        <!-- Unliked (outlined heart) -->
+                                        <svg class="heart-outline" xmlns="http://www.w3.org/2000/svg" height="30px"
+                                            viewBox="0 -960 960 960" width="30px" fill="#42242a">
+                                            <path
+                                                d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
+                                        </svg>
+
+                                        <!-- Liked (filled heart) -->
+                                        <svg class="heart-filled" xmlns="http://www.w3.org/2000/svg" height="30px"
+                                            viewBox="0 -960 960 960" width="30px" fill="#42242a">
+                                            <path
+                                                d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Z" />
+                                        </svg>
+                                    </button>
+                                    <span class="like-count">
+                                        <%=post.likesCount%>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="person-name">
-                            @<%=otheruser.username%>
-                        </div>
-                    </div>
-                    <!-- <h2>Post Title</h2> -->
-                    <p>
-                        <p style="white-space: pre-line;"><%= post.content %></p>
-                    </p>
-                    <div class="card-footer">
-                        <div class="like-container">
-                            <button class="like-button" onclick="toggleLike(this)">
-                                <!-- Unliked (outlined heart) -->
-                                <svg class="heart-outline" xmlns="http://www.w3.org/2000/svg" height="30px"
-                                    viewBox="0 -960 960 960" width="30px" fill="#42242a">
-                                    <path
-                                        d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
-                                </svg>
 
-                                <!-- Liked (filled heart) -->
-                                <svg class="heart-filled" xmlns="http://www.w3.org/2000/svg" height="30px"
-                                    viewBox="0 -960 960 960" width="30px" fill="#42242a">
-                                    <path
-                                        d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Z" />
-                                </svg>
-                            </button>
-                            <span class="like-count">
-                                <%=post.likesCount%>
-                            </span>
-                        </div>
-                    </div>
+                        <% }); %>
+
                 </div>
-
-                <% }); %>
-
-        </div>
     </div>
 
 
-     <script>
-        function toggleLike(button) {
+    <script>
+        async function toggleLike(button, postId) {
             const countSpan = button.nextElementSibling;
             let count = parseInt(countSpan.textContent);
             const liked = button.classList.toggle("liked");
             countSpan.textContent = liked ? count + 1 : count - 1;
+
+            try {
+                const res = await fetch(`/toggle-like/${postId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!res.ok) {
+                    throw new Error('Failed to toggle like');
+                }
+            } catch (err) {
+                console.error(err);
+                // Revert UI change on error
+                button.classList.toggle("liked");
+                countSpan.textContent = liked ? count : count - 1;
+            }
         }
     </script>
+
 </body>
 
 </html>

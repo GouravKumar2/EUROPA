@@ -19,7 +19,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
 app.get('/', isLoggedIn,  (req, res) => {
-    res.render('home', { user: req.user });
+    res.redirect('/home');
+});
+
+app.get('/home', isLoggedIn, async (req, res) => {
+    let user = req.user;
+    let posts = await postModel.find({});
+    posts = posts.reverse();
+    let allusers = await userModel.find({});
+    res.render('home', { user: user, posts: posts, allusers: allusers });
 });
 
 app.get('/login', (req, res) => {

@@ -38,6 +38,28 @@ nav .left h1 {
   margin-left: 30px;
 }
 
+.following-feed {
+  font-family: "Figtree", sans-serif;
+  padding : 8px 20px;
+  border-radius: 30px;
+  font-size: 20px;
+  background-color: #69444b;
+  color:#e7e4de;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.discover-feed {
+  font-family: "Figtree", sans-serif;
+  padding : 6px 18px;
+  border-radius: 30px;
+  font-size: 20px;
+  color: #69444b;
+  border : 2px solid #69444b;
+  margin-left: 40px;
+  cursor: pointer;
+}
+
 nav .right {
   display: flex;
   align-items: center;
@@ -152,6 +174,7 @@ nav .right {
 }
 
 .person-name {
+  color: #42242a;
   font-weight: 600;
 }
 

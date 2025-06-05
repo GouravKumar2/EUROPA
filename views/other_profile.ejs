@@ -45,16 +45,21 @@
                 <%= otheruser.bio %>
             </p>
             <div class="follow">
-                <a href="/profile/<%=otheruser.username%>/followers">
-                    <%= otheruser.followers.length%> Followers
+                <a href="/profile/<%= otheruser.username %>/followers">
+                    <span id="followersCount">
+                        <%= otheruser.followers.length %>
+                    </span> &nbsp Followers
                 </a>
-                <a href="/profile/<%=otheruser.username%>/following">
-                    <%= otheruser.following.length%> Following
+                <a href="/profile/<%= otheruser.username %>/following">
+                    <%= otheruser.following.length %> Following
                 </a>
             </div>
         </div>
         <div class="sidebar-links">
-            <a href="/follow">Follow</a>
+            <button id="followBtn" class="<%= user.following.includes(otheruser._id) ? 'following' : '' %>"
+                onclick="toggleFollow('<%= otheruser._id %>')">
+                <%= user.following.includes(otheruser._id) ? 'Following' : 'Follow' %>
+            </button>
         </div>
     </div>
 
@@ -146,6 +151,38 @@
             }
         }
     </script>
+
+    <script>
+        async function toggleFollow(otherUserId) {
+            const btn = document.getElementById("followBtn");
+            const followersCountSpan = document.getElementById("followersCount");
+            const isFollowing = btn.classList.contains("following");
+
+            try {
+                const res = await fetch('/toggle-follow/' + otherUserId, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!res.ok) throw new Error("Request failed");
+
+                // Toggle class and text
+                btn.classList.toggle("following");
+                btn.textContent = isFollowing ? "Follow" : "Following";
+
+                // Update followers count
+                let currentCount = parseInt(followersCountSpan.textContent);
+                followersCountSpan.textContent = isFollowing ? currentCount - 1 : currentCount + 1;
+
+            } catch (err) {
+                console.error("Follow toggle failed:", err);
+            }
+        }
+    </script>
+
+
 
 </body>
 

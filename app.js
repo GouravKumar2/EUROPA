@@ -234,6 +234,36 @@ app.post('/toggle-like/:postId', isLoggedIn, async (req, res) => {
     }
 });
 
+app.post('/toggle-follow/:otherUserId', isLoggedIn, async (req, res) => {
+    try {
+        const user = req.user;
+        const otherUserId = req.params.otherUserId;
+
+        if (user._id.equals(otherUserId)) {
+            return res.status(400).send("Can't follow yourself");
+        }
+
+        const isFollowing = user.following.includes(otherUserId);
+
+        if (isFollowing) {
+            // Unfollow
+            user.following.pull(otherUserId);
+            await userModel.findByIdAndUpdate(otherUserId, { $pull: { followers: user._id } });
+        } else {
+            // Follow
+            user.following.push(otherUserId);
+            await userModel.findByIdAndUpdate(otherUserId, { $addToSet: { followers: user._id } });
+        }
+
+        await user.save();
+        res.send("Success");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Error toggling follow");
+    }
+});
+
+
 
 function isLoggedIn(req, res, next) {
     let token = req.cookies.token;

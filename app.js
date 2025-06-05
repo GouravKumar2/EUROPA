@@ -182,6 +182,34 @@ app.get('/profile/:username', isLoggedIn, async (req, res) => {
 
 });
 
+app.get('/profile/:username/followers', isLoggedIn, async (req, res) => {
+    let username = req.params.username;
+    let otheruser = await userModel.findOne({ username: username });
+    if (!otheruser) {
+        return res.redirect('/');
+    }
+
+    if (otheruser._id.toString() === req.user._id.toString()) {
+        return res.redirect('/myprofile/followers');
+    }
+
+    let followers = await userModel.find({ _id: { $in: otheruser.followers } });
+    res.render('other_followers', { user: req.user, followers: followers, otheruser: otheruser });
+});
+
+app.get('/profile/:username/following', isLoggedIn, async (req, res) => {
+    let username = req.params.username;
+    let otheruser = await userModel.findOne({ username: username });
+    if (!otheruser) {
+        return res.redirect('/');
+    }
+    if (otheruser._id.toString() === req.user._id.toString()) {
+        return res.redirect('/myprofile/following');
+    }
+    let following = await userModel.find({ _id: { $in: otheruser.following } });
+    res.render('other_following', { user: req.user, following: following, otheruser: otheruser });
+});
+
 function isLoggedIn(req, res, next) {
     let token = req.cookies.token;
     if (token) {

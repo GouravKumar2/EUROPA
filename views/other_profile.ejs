@@ -45,8 +45,8 @@
                 <%= otheruser.bio %>
             </p>
             <div class="follow">
-                <a href="/profile/followers"> <%= otheruser.followers.length%> Followers</a>
-                <a href="/profile/following"> <%= otheruser.following.length%> Following</a>
+                <a href="/profile/<%=otheruser.username%>/followers"> <%= otheruser.followers.length%> Followers</a>
+                <a href="/profile/<%=otheruser.username%>/following"> <%= otheruser.following.length%> Following</a>
             </div>
         </div>
         <div class="sidebar-links">

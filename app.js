@@ -263,6 +263,26 @@ app.post('/toggle-follow/:otherUserId', isLoggedIn, async (req, res) => {
     }
 });
 
+app.post('/remove-follower/:followerId', isLoggedIn, async (req, res) => {
+    try {
+        const user = req.user;
+        const followerId = req.params.followerId;
+
+        // Remove followerId from user's followers
+        user.followers = user.followers.filter(id => id.toString() !== followerId);
+        await user.save();
+
+        // Also remove user from follower's "following" list
+        await userModel.findByIdAndUpdate(followerId, {
+            $pull: { following: user._id }
+        });
+
+        res.status(200).send('Removed');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error removing follower');
+    }
+});
 
 
 function isLoggedIn(req, res, next) {

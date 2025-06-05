@@ -43,8 +43,14 @@
                 <%= user.bio %>
             </p>
             <div class="follow">
-                <a href="/myprofile/followers"> <%= user.followers.length%> Followers</a>
-                <a href="/myprofile/following"> <%= user.following.length%> Following</a>
+                <a href="/myprofile/followers">
+                    <span id="followersCount">
+                        <%= user.followers.length %>
+                    </span> &nbsp; Followers
+                </a>
+                <a href="/myprofile/following">
+                    <%= user.following.length%> Following
+                </a>
             </div>
         </div>
         <div class="sidebar-links">
@@ -59,193 +65,52 @@
             <h1>Followers</h1>
             <div class="followers-list">
                 <!-- Begin followers loop here -->
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
+
+                <%followers.forEach(function(follower) { %>
+
+                    <div class="followcard">
+                        <a href="/profile/<%=follower.username%>" class="accountinfo">
+                            <img src="<%=follower.icon%>" alt="">
+                            <h2>@<%=follower.username%>
+                            </h2>
+                        </a>
+                        <div class="buttons">
+                            <button onclick="removeFollower(this, '<%= follower._id %>')">Remove</button>
+                        </div>
                     </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>remove</button>
-                    </div>
-                </div>
-                <!-- End followers loop here -->
+
+                    <%})%>
+                        <!-- End followers loop here -->
             </div>
         </div>
-  
+
 
     </div>
 
-
     <script>
-        function toggleLike(button) {
-            const countSpan = button.nextElementSibling;
+    async function removeFollower(button, followerId) {
+        try {
+            const res = await fetch(`/remove-follower/${followerId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            if (!res.ok) throw new Error('Failed to remove follower');
+
+            // Remove follower card from DOM
+            const card = button.closest('.followcard');
+            card.remove();
+
+            // Update followers count
+            const countSpan = document.getElementById("followersCount");
             let count = parseInt(countSpan.textContent);
-            const liked = button.classList.toggle("liked");
-            countSpan.textContent = liked ? count + 1 : count - 1;
+            countSpan.textContent = count - 1;
+        } catch (err) {
+            console.error('Remove failed:', err);
         }
-    </script>
+    }
+</script>
+
 </body>
 
 </html>

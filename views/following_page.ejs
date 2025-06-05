@@ -43,8 +43,12 @@
                 <%= user.bio %>
             </p>
             <div class="follow">
-                <a href="/myprofile/followers"> <%= user.followers.length%> Followers</a>
-                <a href="/myprofile/following"> <%= user.following.length%> Following</a>
+                <a href="/myprofile/followers">
+                    <%= user.followers.length%> Followers
+                </a>
+                <a href="/myprofile/following">
+                    <%= user.following.length%> Following
+                </a>
             </div>
         </div>
         <div class="sidebar-links">
@@ -59,65 +63,26 @@
             <h1>Following</h1>
             <div class="followers-list">
                 <!-- Begin followers loop here -->
+                <% following.forEach(function(followed) { %>
                 <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
+                    <a href="/profile/<%=followed.username%>" class="accountinfo">
+                        <img src="<%=followed.icon%>" alt="">
+                        <h2>@<%=followed.username%>
+                        </h2>
                     </a>
                     <div class="buttons">
-                        <button>unfollow</button>
+                        <button class="followBtn <%= user.following.includes(followed._id) ? '' : 'followactive' %>"
+                            data-user-id="<%= followed._id %>" onclick="toggleFollow(this, '<%= followed._id %>')">
+                            <%= user.following.includes(followed._id) ? 'Following' : 'Follow' %>
+                        </button>
                     </div>
                 </div>
-               
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>unfollow</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>unfollow</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>unfollow</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>unfollow</button>
-                    </div>
-                </div>
-                <div class="followcard">
-                    <a href="" class="accountinfo">
-                        <img src="<%=user.icon%>" alt="">
-                        <h2>@username</h2>
-                    </a>
-                    <div class="buttons">
-                        <button>unfollow</button>
-                    </div>
-                </div>
+                <% }); %>
+
                 <!-- End followers loop here -->
             </div>
         </div>
-  
+
 
     </div>
 
@@ -128,6 +93,25 @@
             let count = parseInt(countSpan.textContent);
             const liked = button.classList.toggle("liked");
             countSpan.textContent = liked ? count + 1 : count - 1;
+        }
+    </script>
+
+    <script>
+        async function toggleFollow(btn, otherUserId) {
+            const isFollowing = !btn.classList.contains('followactive');
+            try {
+                const res = await fetch('/toggle-follow/' + otherUserId, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (!res.ok) throw new Error("Request failed");
+                btn.classList.toggle('followactive');
+                btn.textContent = isFollowing ? 'Follow' : 'Following';
+            } catch (err) {
+                console.error("Follow toggle failed:", err);
+            }
         }
     </script>
 </body>

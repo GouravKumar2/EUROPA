@@ -253,6 +253,7 @@ nav .right {
 .followcard {
     width :90%;
     min-height: 50px;
+    height: 50px;;
     background-color: #5e3f45;
     color: #e7e4de;
     border-radius: 30px;
@@ -286,22 +287,55 @@ nav .right {
 
 
 
-
-.buttons{
+.buttons {
     margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Ensure it fills parent height */
 }
 
-.buttons button{
+.buttons button {
+    min-width: 80px;
     height: 30px;
-    width: 80px;
-    background-color:#aea19c;
+    background-color: #aea19c;
     color: #42242a;
-    border: none;
+    border: 3px solid transparent;
     border-radius: 15px;
     font-family: 'Figtree', sans-serif;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box; /* prevents borders from increasing element height */
+    padding: 0 12px;
 }
 
+
+.followBtn {
+    min-width: 80px;
+    height: 30px;
+    background-color: #aea19c;
+    color: #42242a;
+    border: 3px solid transparent;
+    border-radius: 15px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box; /* prevents borders from increasing element height */
+    padding: 0 12px;
+}
+
+.followBtn.followactive {
+    background-color: transparent;
+    color:#d1c2bc;
+    border: 3px solid #d1c2bc;
+}

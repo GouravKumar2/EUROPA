@@ -23,12 +23,58 @@ app.get('/', isLoggedIn,  (req, res) => {
 });
 
 app.get('/home', isLoggedIn, async (req, res) => {
-    let user = req.user;
-    let posts = await postModel.find({});
-    posts = posts.reverse();
-    let allusers = await userModel.find({});
-    res.render('home', { user: user, posts: posts, allusers: allusers });
+    const page = parseInt(req.query.page) || 1;
+    const limit = 16;
+    const skip = (page - 1) * limit;
+
+    const posts = await postModel.find({}).sort({ _id: -1 }).skip(skip).limit(limit);
+    const allusers = await userModel.find({});
+    const total = await postModel.countDocuments();
+    const hasMore = skip + posts.length < total;
+
+    if (req.xhr) {
+        return res.json({ posts, allusers, hasMore });
+    }
+
+    res.render('home', {
+        user: req.user,
+        posts,
+        allusers,
+        currentPage: page,
+        hasMore
+    });
 });
+
+app.get('/home/following', isLoggedIn, async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 16;
+    const skip = (page - 1) * limit;
+
+    const followingIds = [...req.user.following];
+
+    const posts = await postModel.find({ user: { $in: followingIds } })
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(limit);
+
+    const allusers = await userModel.find({ _id: { $in: followingIds } });
+    const total = await postModel.countDocuments({ user: { $in: followingIds } });
+    const hasMore = skip + posts.length < total;
+
+    if (req.xhr) {
+        return res.json({ posts, allusers, hasMore });
+    }
+
+    res.render('home_following', {
+        user: req.user,
+        posts,
+        allusers,
+        currentPage: page,
+        hasMore
+    });
+});
+
+
 
 app.get('/login', (req, res) => {
     res.render('login');

@@ -19,8 +19,8 @@
             <a href="/">
                 <h1>EUROPA</h1>
             </a>
-            <div class="discover-feed">Discover</div>
-            <a  href="/home/following" class="following-feed">Following</a>
+            <a href="/home" class="discover">Discover</a>
+            <div class="following">Following</div>
         </div>
         <div class="right">
             <a href="/newpost" id="create-post">NEW POST</a>
@@ -35,7 +35,7 @@
 
     <div class="hacks"></div>
 
-
+    
     <div class="main" id="post-container">
         <% posts.forEach(function(post) {
             const postuser = allusers.find(u => u._id.toString() === post.user.toString()); %>
@@ -47,7 +47,6 @@
     </div>
 
     <!-- 📦 Load More Button -->
-
     <% if (hasMore) { %>
     <div style="text-align: center; margin: 20px;">
         <button id="load-more-btn" class="following-feed" style="outline: none; border: none; box-shadow: none;">Load More</button>
@@ -87,7 +86,7 @@
 
         document.getElementById('load-more-btn').addEventListener('click', async () => {
             currentPage++;
-            const res = await fetch(`/home?page=${currentPage}`, {
+            const res = await fetch(`/home/following?page=${currentPage}`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }

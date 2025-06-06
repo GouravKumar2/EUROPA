@@ -61,7 +61,38 @@ nav .right {
     height: auto;
     background-color: #d2ade7;
     border-radius: 40px;
+    overflow: hidden; /* ✅ hides anything that overflows the rounded corners */
+    background-image: url('/media/europa-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    padding : 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
 }
+
+.info h1{
+    font-family: "Figtree", sans-serif;
+    font-size: 10vw;
+    font-weight: 900;
+    color: #42242a;
+}
+
+.info h2{
+    font-family: "Figtree", sans-serif;
+    font-size: 1.5vw;
+    font-weight: 700;
+    color: #42242a;
+    padding-left: 8px;
+    translate: 0 -10px;
+    margin-bottom: 30px;
+}
+
+
 
 .main form {
     display: flex;
@@ -209,5 +240,23 @@ nav .right {
     color: #42242a;
     letter-spacing: 2px;
     margin-left: 30px;
+}
+
+
+.info h1{
+    font-family: "Figtree", sans-serif;
+    font-size: 18vw;
+    font-weight: 900;
+    color: #42242a;
+}
+
+.info h2{
+    font-family: "Figtree", sans-serif;
+    font-size: 3vw;
+    font-weight: 700;
+    color: #42242a;
+    padding-left: 4px;
+    translate: 0 -10px;
+    margin-bottom: 30px;
 }
 }

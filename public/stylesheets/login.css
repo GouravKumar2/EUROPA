@@ -1,179 +1,207 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    background-color: #e7e4de;
+body {
+  background-color: #e7e4de;
 }
 
-nav{
-    width : 95%;
-    border-radius: 30px;
-    height: 60px;
-    background-color: #d1c2bc;
-    margin : 30px auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+nav {
+  width: 95%;
+  border-radius: 30px;
+  height: 60px;
+  background-color: #d1c2bc;
+  margin: 30px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-nav .left{
-    display: flex;
-    align-items: center;
+nav .left {
+  display: flex;
+  align-items: center;
 }
 
-nav .left h1{
-    font-family: "Climate Crisis", sans-serif;
-    font-size: 30px;
-    color: #42242a;
-    letter-spacing: 2px;
-    margin-left: 30px;
+nav .left h1 {
+  font-family: "Climate Crisis", sans-serif;
+  font-size: 30px;
+  color: #42242a;
+  letter-spacing: 2px;
+  margin-left: 30px;
 }
 
 nav .right {
-    display: flex;
-    align-items: center;
-    margin-right: 1vw;
+  display: flex;
+  align-items: center;
+  margin-right: 1vw;
 }
 
 .right h2 {
-    font-family: "Space Mono", monospace;
-    font-size: 20px;
-    color: #42242a;
-    margin-right: 20px;
+  font-family: "Space Mono", monospace;
+  font-size: 20px;
+  color: #42242a;
+  margin-right: 20px;
 }
 
-.main{
-    width: 95%;
-    padding-bottom: 30px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box;
+.main {
+  width: 95%;
+  padding-bottom: 30px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
 }
 
-.info{
-    width : 55vw;
-    min-height: 570px;
-    height: auto;
-    background-color: #d2ade7;
-    border-radius: 40px;
+.info {
+  width: 55vw;
+  min-height: 570px;
+  height: auto;
+  background-color: #d2ade7;
+  border-radius: 40px;
+  overflow: hidden; /* ✅ hides anything that overflows the rounded corners */
+  background-image: url("/media/europa-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  padding: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  flex-direction: column;
+}
+
+.info h1 {
+  font-family: "Figtree", sans-serif;
+  font-size: 10vw;
+  font-weight: 900;
+  color: #42242a;
+}
+
+.info h2 {
+  font-family: "Figtree", sans-serif;
+  font-size: 1.5vw;
+  font-weight: 700;
+  color: #42242a;
+  padding-left: 8px;
+  translate: 0 -10px;
+  margin-bottom: 30px;
 }
 
 .main form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 570px;
-    height: auto;
-    padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 570px;
+  height: auto;
+  padding-left: 30px;
 }
 
 .signup {
-    width: 40vw;
-    flex-grow: 1;
-    background-color: #45242d;
-    border-radius: 40px;
-    /* box-shadow: 0 4px 24px rgba(66,36,42,0.08); */
-    padding: 35px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: left;
-     font-family: "Figtree", sans-serif;
-     color : #e7e4de;
+  width: 40vw;
+  flex-grow: 1;
+  background-color: #45242d;
+  border-radius: 40px;
+  /* box-shadow: 0 4px 24px rgba(66,36,42,0.08); */
+  padding: 35px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: left;
+  font-family: "Figtree", sans-serif;
+  color: #e7e4de;
 }
 
 .signup h2 {
-    color: #d7d7d7;
-    font-size: 40px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-align: left;
+  color: #d7d7d7;
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: left;
 }
 
 .signup label {
-    font-size: 15px;
-    margin-bottom: 6px;
-    margin-top: 12px;
-    letter-spacing: 1px;
+  font-size: 15px;
+  margin-bottom: 6px;
+  margin-top: 12px;
+  letter-spacing: 1px;
 }
 
 .signup input {
-    height: 50px;
-    padding-left: 20px;
-    border: none;
-    border-radius: 30px;
-    background: #e7e4de;
-    font-family: "Figtree", sans-serif;
-    font-size: 20px;
-    margin-bottom: 8px;
-    outline: none;
-    color: #42242a;
-    transition: box-shadow 0.2s;
-    box-shadow: 0 1px 4px rgba(66,36,42,0.06);
+  height: 50px;
+  padding-left: 20px;
+  border: none;
+  border-radius: 30px;
+  background: #e7e4de;
+  font-family: "Figtree", sans-serif;
+  font-size: 20px;
+  margin-bottom: 8px;
+  outline: none;
+  color: #42242a;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 1px 4px rgba(66, 36, 42, 0.06);
 }
 
 .signup input:focus {
-    box-shadow: 0 0 0 2px #bfa7a0;
+  box-shadow: 0 0 0 2px #bfa7a0;
 }
 
 .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 25px;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  width: 100%;
 }
 
 .buttons #signup-button {
-    width: 48%;
-    height: 60px;
-    padding: 8px 0;
-    border: none;
-    border-radius: 100px;
-    background-color: #d2ade7;
-    color: #4f2b32;
-     font-family: "Space Mono", monospace;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: background 0.2s;
+  width: 48%;
+  height: 60px;
+  padding: 8px 0;
+  border: none;
+  border-radius: 100px;
+  background-color: #d2ade7;
+  color: #4f2b32;
+  font-family: "Space Mono", monospace;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .buttons #signup-button:hover {
-    background-color: #a881bf;
+  background-color: #a881bf;
 }
 
 .buttons #login-button {
-    width: 48%;
-    padding: 8px 0;
-    border: 2px solid #d7d7d7;
-    background-color: #d1c2bc;
-    border-radius: 100px;
-    color: #4f2b32;
-     font-family: "Space Mono", monospace;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: background 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    text-align: center;
+  width: 48%;
+  padding: 8px 0;
+  border: 2px solid #d7d7d7;
+  background-color: #d1c2bc;
+  border-radius: 100px;
+  color: #4f2b32;
+  font-family: "Space Mono", monospace;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  text-align: center;
 }
 
 .buttons #login-button:hover {
   background-color: #9b7d71;
-    color: #42242a;
+  color: #42242a;
 }
-
 
 @media (max-width: 700px) {
   .main {
@@ -188,26 +216,41 @@ nav .right {
     margin-bottom: 20px;
   }
 
-  .main form{
+  .main form {
     width: 100%;
     padding: 0px;
   }
 
-    .signup {
-        width: 100%;
-        
-    }
+  .signup {
+    width: 100%;
+  }
 
-    .buttons #login-button {
-       font-size: 16px;
+  .buttons #login-button {
+    font-size: 16px;
+  }
 
-    }
-
-    nav .left h1{
+  nav .left h1 {
     font-family: "Climate Crisis", sans-serif;
     font-size: 20px;
     color: #42242a;
     letter-spacing: 2px;
     margin-left: 30px;
-}
+  }
+
+  .info h1 {
+    font-family: "Figtree", sans-serif;
+    font-size: 18vw;
+    font-weight: 900;
+    color: #42242a;
+  }
+
+  .info h2 {
+    font-family: "Figtree", sans-serif;
+    font-size: 3vw;
+    font-weight: 700;
+    color: #42242a;
+    padding-left: 4px;
+    translate: 0 -10px;
+    margin-bottom: 30px;
+  }
 }

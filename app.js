@@ -166,11 +166,14 @@ app.get('/myprofile/edit', isLoggedIn, async (req, res) => {
 });
 
 app.post('/update-profile', isLoggedIn, async (req, res) => {
-    let { icon, username, bio, email } = req.body;
+    let { icon, fullname, username, bio, email } = req.body;
     let user = req.user;
     
     if (username) {
         user.username = username;
+    }
+    if (fullname) {
+        user.fullname = fullname;
     }
     if (email) {
         user.email = email;

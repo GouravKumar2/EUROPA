@@ -14,6 +14,10 @@
 </head>
 
 <body>
+
+     <div class="hacks"></div>
+
+     
     <nav>
         <div class="left">
             <a href="/">
@@ -22,94 +26,100 @@
         </div>
         <div class="right">
             <a href="/newpost" id="create-post">NEW POST</a>
+             <a href="/newpost" id="create-post-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#42242a"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg></a>
+   
             <a id="profile-icon" href="/myprofile">
                 <img src="<%= user.icon %>" alt="">
             </a>
         </div>
     </nav>
 
-    <div class="sidebar">
-        <div class="profile-info">
-            <img src="<%= user.icon %>" alt="">
-            <h2>
-                <%= user.fullname %>
-            </h2>
-            <div class="username">
+    <div class="actualmain">
+
+        <div class="sidebar">
+            <div class="profile-info">
+                <img src="<%= user.icon %>" alt="">
+                <h2>
+                    <%= user.fullname %>
+                </h2>
+                <div class="username">
+                    <p>
+                        @<%= user.username %>
+                    </p>
+                </div>
                 <p>
-                    @<%= user.username %>
+                    <%= user.bio %>
                 </p>
+                <div class="follow">
+                    <a href="/myprofile/followers">
+                        <span id="followersCount">
+                            <%= user.followers.length %>
+                        </span> &nbsp; Followers
+                    </a>
+                    <a href="/myprofile/following">
+                        <%= user.following.length%> Following
+                    </a>
+                </div>
             </div>
-            <p>
-                <%= user.bio %>
-            </p>
-            <div class="follow">
-                <a href="/myprofile/followers">
-                    <span id="followersCount">
-                        <%= user.followers.length %>
-                    </span> &nbsp; Followers
-                </a>
-                <a href="/myprofile/following">
-                    <%= user.following.length%> Following
-                </a>
+            <div class="sidebar-links">
+                <a href="/myprofile/edit">Edit Profile</a>
+                <a href="/logout">Logout</a>
             </div>
         </div>
-        <div class="sidebar-links">
-            <a href="/myprofile/edit">Edit Profile</a>
-            <a href="/logout">Logout</a>
-        </div>
-    </div>
 
-    
-    <div class="main">
-        <div class="followersbox">
-            <h1>Followers</h1>
-            <div class="followers-list">
-                <!-- Begin followers loop here -->
 
-                <%followers.forEach(function(follower) { %>
+        <div class="main">
+            <div class="followersbox">
+                <h1>Followers</h1>
+                <div class="followers-list">
+                    <!-- Begin followers loop here -->
 
-                    <div class="followcard">
-                        <a href="/profile/<%=follower.username%>" class="accountinfo">
-                            <img src="<%=follower.icon%>" alt="">
-                            <h2>@<%=follower.username%>
-                            </h2>
-                        </a>
-                        <div class="buttons">
-                            <button onclick="removeFollower(this, '<%= follower._id %>')">Remove</button>
+                    <%followers.forEach(function(follower) { %>
+
+                        <div class="followcard">
+                            <a href="/profile/<%=follower.username%>" class="accountinfo">
+                                <img src="<%=follower.icon%>" alt="">
+                                <h2>@<%=follower.username%>
+                                </h2>
+                            </a>
+                            <div class="buttons">
+                                <button onclick="removeFollower(this, '<%= follower._id %>')">Remove</button>
+                            </div>
                         </div>
-                    </div>
 
-                    <%})%>
-                        <!-- End followers loop here -->
+                        <%})%>
+                            <!-- End followers loop here -->
+                </div>
             </div>
-        </div>
 
+
+        </div>
 
     </div>
 
     <script>
-    async function removeFollower(button, followerId) {
-        try {
-            const res = await fetch(`/remove-follower/${followerId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            });
+        async function removeFollower(button, followerId) {
+            try {
+                const res = await fetch(`/remove-follower/${followerId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
 
-            if (!res.ok) throw new Error('Failed to remove follower');
+                if (!res.ok) throw new Error('Failed to remove follower');
 
-            // Remove follower card from DOM
-            const card = button.closest('.followcard');
-            card.remove();
+                // Remove follower card from DOM
+                const card = button.closest('.followcard');
+                card.remove();
 
-            // Update followers count
-            const countSpan = document.getElementById("followersCount");
-            let count = parseInt(countSpan.textContent);
-            countSpan.textContent = count - 1;
-        } catch (err) {
-            console.error('Remove failed:', err);
+                // Update followers count
+                const countSpan = document.getElementById("followersCount");
+                let count = parseInt(countSpan.textContent);
+                countSpan.textContent = count - 1;
+            } catch (err) {
+                console.error('Remove failed:', err);
+            }
         }
-    }
-</script>
+    </script>
 
 </body>
 

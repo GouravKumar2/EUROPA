@@ -24,8 +24,12 @@
         </div>
         <div class="right">
             <a href="/newpost" id="create-post">NEW POST</a>
-            <a href="/newpost" id="create-post-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#42242a"><path d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg></a>
-   
+            <a href="/newpost" id="create-post-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px"
+                    viewBox="0 -960 960 960" width="30px" fill="#42242a">
+                    <path
+                        d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                </svg></a>
+
             <a id="username" href="/myprofile">
                 <%= user.username %>
             </a>
@@ -37,70 +41,105 @@
 
     <div class="hacks"></div>
 
-    
-    <div class="main" id="post-container">
-        <% posts.forEach(function(post) {
-            const postuser = allusers.find(u => u._id.toString() === post.user.toString()); %>
+    <% function timeAgo(date) { const seconds=Math.floor((Date.now() - new Date(date)) / 1000); const units=[ {
+        label: 'year' , seconds: 365 * 24 * 60 * 60 }, { label: 'month' , seconds: 30 * 24 * 60 * 60 }, { label: 'day' ,
+        seconds: 24 * 60 * 60 }, { label: 'hour' , seconds: 60 * 60 }, { label: 'minute' , seconds: 60 }, {
+        label: 'second' , seconds: 1 } ]; for (const unit of units) { const value=Math.floor(seconds / unit.seconds); if
+        (value> 0) {
+        return `${value} ${unit.label}${value !== 1 ? 's' : ''} ago`;
+        }
+        }
 
-            <!-- ⬅️ Reusing post partial manually for first load -->
-            <%- include('partials/post', { post, postuser, user }) %>
+        return 'just now';
+        } %>
 
-        <% }); %>
-    </div>
-
-    <!-- 📦 Load More Button -->
-    <% if (hasMore) { %>
-    <div style="text-align: center; margin: 20px;">
-        <button id="load-more-btn" class="following-feed" style="outline: none; border: none; box-shadow: none;">Load More</button>
-    </div>
-    <% } %>
-
-
-            <script>
-                async function toggleLike(button, postId) {
-                    const countSpan = button.nextElementSibling;
-                    let count = parseInt(countSpan.textContent);
-                    const liked = button.classList.toggle("liked");
-                    countSpan.textContent = liked ? count + 1 : count - 1;
-
-                    try {
-                        const res = await fetch(`/toggle-like/${postId}`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        });
-
-                        if (!res.ok) {
-                            throw new Error('Failed to toggle like');
-                        }
-                    } catch (err) {
-                        console.error(err);
-                        // Revert UI change on error
-                        button.classList.toggle("liked");
-                        countSpan.textContent = liked ? count : count - 1;
+        <script>
+            // Paste your timeAgo(...) implementation here, but written as plain JS:
+            function timeAgo(date) {
+                const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
+                const units = [
+                    { label: 'year', seconds: 365 * 24 * 60 * 60 },
+                    { label: 'month', seconds: 30 * 24 * 60 * 60 },
+                    { label: 'day', seconds: 24 * 60 * 60 },
+                    { label: 'hour', seconds: 60 * 60 },
+                    { label: 'minute', seconds: 60 },
+                    { label: 'second', seconds: 1 }
+                ];
+                for (const unit of units) {
+                    const value = Math.floor(seconds / unit.seconds);
+                    if (value > 0) {
+                        return `${value} ${unit.label}${value !== 1 ? 's' : ''} ago`;
                     }
                 }
-            </script>
+                return 'just now';
+            }
+        </script>
 
-            <script>
-        let currentPage = 1;
 
-        document.getElementById('load-more-btn').addEventListener('click', async () => {
-            currentPage++;
-            const res = await fetch(`/home/following?page=${currentPage}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            });
-            const data = await res.json();
+        <div class="main" id="post-container">
+            <% posts.forEach(function(post) { const postuser=allusers.find(u=> u._id.toString() ===
+                post.user.toString()); %>
 
-            const container = document.getElementById('post-container');
+                <!-- ⬅️ Reusing post partial manually for first load -->
+                <%- include('partials/post', { post, postuser, user }) %>
 
-            for (let post of data.posts) {
-                const user = data.allusers.find(u => u._id === post.user);
-                const liked = post.likes.includes("<%= user._id %>");
-                const html = `
+                    <% }); %>
+        </div>
+
+        <!-- 📦 Load More Button -->
+        <% if (hasMore) { %>
+            <div style="text-align: center; margin: 20px;">
+                <button id="load-more-btn" class="following-feed"
+                    style="outline: none; border: none; box-shadow: none;">Load More</button>
+            </div>
+            <% } %>
+
+
+                <script>
+                    async function toggleLike(button, postId) {
+                        const countSpan = button.nextElementSibling;
+                        let count = parseInt(countSpan.textContent);
+                        const liked = button.classList.toggle("liked");
+                        countSpan.textContent = liked ? count + 1 : count - 1;
+
+                        try {
+                            const res = await fetch(`/toggle-like/${postId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+
+                            if (!res.ok) {
+                                throw new Error('Failed to toggle like');
+                            }
+                        } catch (err) {
+                            console.error(err);
+                            // Revert UI change on error
+                            button.classList.toggle("liked");
+                            countSpan.textContent = liked ? count : count - 1;
+                        }
+                    }
+                </script>
+
+                <script>
+                    let currentPage = 1;
+
+                    document.getElementById('load-more-btn').addEventListener('click', async () => {
+                        currentPage++;
+                        const res = await fetch(`/home/following?page=${currentPage}`, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        });
+                        const data = await res.json();
+
+                        const container = document.getElementById('post-container');
+
+                        for (let post of data.posts) {
+                            const user = data.allusers.find(u => u._id === post.user);
+                            const liked = post.likes.includes("<%= user._id %>");
+                            const html = `
                     <div style="background-color: ${post.cardColor};" class="card">
                         <a href="/profile/${user.username}" class="person-details">
                             <div class="person-icon">
@@ -110,6 +149,7 @@
                         </a>
                         <p>${post.content}</p>
                         <div class="card-footer">
+                            <div class="datecontainer">${timeAgo(post.date)}</div>
                             <div class="like-container">
                                 <button class="like-button ${liked ? 'liked' : ''}"
                                         onclick="toggleLike(this, '${post._id}')">
@@ -122,15 +162,15 @@
                             </div>
                         </div>
                     </div>`;
-                container.insertAdjacentHTML('beforeend', html);
-            }
+                            container.insertAdjacentHTML('beforeend', html);
+                        }
 
-            if (!data.hasMore) {
-                document.getElementById('load-more-btn').style.display = 'none';
-            }
-        });
-    </script>
-            
+                        if (!data.hasMore) {
+                            document.getElementById('load-more-btn').style.display = 'none';
+                        }
+                    });
+                </script>
+
 
 </body>
 

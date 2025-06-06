@@ -223,9 +223,15 @@ nav .right {
 
 .card-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   margin-top: auto;
+}
+
+.datecontainer {
+  font-family: "Figtree", sans-serif;
+  font-size: 14px;
+  color: #5e3a43;
 }
 
 .like-container {

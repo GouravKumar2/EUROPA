@@ -73,10 +73,13 @@ nav .right {
 }
 
 .main {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+
 
 .card {
   margin-top: 20px;
@@ -186,4 +189,29 @@ nav .right {
   font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
+}
+
+@media (max-width: 720px) {
+
+  #username {
+   display: none;
+  }
+
+  .main form {
+   width: 100%;
+   display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+ }
+
+ .card{
+    width: 90%;
+   
+ }
+
+ #submit {
+  width: 90%;
+  
+ }
 }

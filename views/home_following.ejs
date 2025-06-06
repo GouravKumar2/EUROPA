@@ -147,7 +147,7 @@
                             </div>
                             <div class="person-name">@${user.username}</div>
                         </a>
-                        <p>${post.content}</p>
+                        <p>${post.content.replace(/\n/g, '<br>')}</p>
                         <div class="card-footer">
                             <div class="datecontainer">${timeAgo(post.date)}</div>
                             <div class="like-container">

@@ -110,8 +110,8 @@
                                 </div>
                                 <!-- <h2>Post Title</h2> -->
                                 <p>
-                                <p style="white-space: pre-line;">
-                                    <%= post.content %>
+                                <p>
+                                   <%- post.content.replace(/\n/g, '<br>') %>
                                 </p>
                                 </p>
                                 <div class="card-footer">

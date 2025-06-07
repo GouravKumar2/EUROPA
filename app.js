@@ -10,7 +10,6 @@ require('dotenv').config();
 const userModel = require('./models/user');
 const postModel = require('./models/post'); 
 const commentModel = require('./models/comment');
-const db = require('./config/mongoose-connection');
 
 
 app.use(express.json());

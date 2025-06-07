@@ -6,11 +6,11 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+require('dotenv').config();
 const userModel = require('./models/user');
 const postModel = require('./models/post'); 
 const commentModel = require('./models/comment');
-
+const db = require('./config/mongoose-connection');
 
 
 app.use(express.json());
@@ -19,260 +19,306 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
-app.get('/', isLoggedIn,  (req, res) => {
-    res.redirect('/home');
-});
-
-app.get('/home', isLoggedIn, async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = 16;
-    const skip = (page - 1) * limit;
-
-    const posts = await postModel.find({}).sort({ _id: -1 }).skip(skip).limit(limit);
-    const allusers = await userModel.find({});
-    const total = await postModel.countDocuments();
-    const hasMore = skip + posts.length < total;
-
-    if (req.xhr) {
-        return res.json({ posts, allusers, hasMore });
+app.get('/', isLoggedIn, (req, res, next) => {
+    try {
+        res.redirect('/home');
+    } catch (err) {
+        next(err);
     }
-
-    res.render('home', {
-        user: req.user,
-        posts,
-        allusers,
-        currentPage: page,
-        hasMore
-    });
 });
 
-app.get('/home/following', isLoggedIn, async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = 16;
-    const skip = (page - 1) * limit;
+app.get('/home', isLoggedIn, async (req, res, next) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = 16;
+        const skip = (page - 1) * limit;
 
-    const followingIds = [...req.user.following];
+        const posts = await postModel.find({}).sort({ _id: -1 }).skip(skip).limit(limit);
+        const allusers = await userModel.find({});
+        const total = await postModel.countDocuments();
+        const hasMore = skip + posts.length < total;
 
-    const posts = await postModel.find({ user: { $in: followingIds } })
-        .sort({ _id: -1 })
-        .skip(skip)
-        .limit(limit);
+        if (req.xhr) {
+            return res.json({ posts, allusers, hasMore });
+        }
 
-    const allusers = await userModel.find({ _id: { $in: followingIds } });
-    const total = await postModel.countDocuments({ user: { $in: followingIds } });
-    const hasMore = skip + posts.length < total;
-
-    if (req.xhr) {
-        return res.json({ posts, allusers, hasMore });
+        res.render('home', {
+            user: req.user,
+            posts,
+            allusers,
+            currentPage: page,
+            hasMore
+        });
+    } catch (err) {
+        next(err);
     }
-
-    res.render('home_following', {
-        user: req.user,
-        posts,
-        allusers,
-        currentPage: page,
-        hasMore
-    });
 });
 
-app.get('/login', (req, res) => {
-    res.render('login');
-});
+app.get('/home/following', isLoggedIn, async (req, res, next) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = 16;
+        const skip = (page - 1) * limit;
 
-app.get('/signup', (req, res) => {
-    res.render('signup');
-});
+        const followingIds = [...req.user.following];
 
-app.post('/create-user', async (req, res) => {
-    let {fullname, username, email, password } = req.body;
-    
-    let user = await userModel.findOne({ 
-        $or: [ { email: email }, { username: username } ] 
-    });
-    if (user) {
-        res.render('signup', { userexists: true });
+        const posts = await postModel.find({ user: { $in: followingIds } })
+            .sort({ _id: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        const allusers = await userModel.find({ _id: { $in: followingIds } });
+        const total = await postModel.countDocuments({ user: { $in: followingIds } });
+        const hasMore = skip + posts.length < total;
+
+        if (req.xhr) {
+            return res.json({ posts, allusers, hasMore });
+        }
+
+        res.render('home_following', {
+            user: req.user,
+            posts,
+            allusers,
+            currentPage: page,
+            hasMore
+        });
+    } catch (err) {
+        next(err);
     }
-    else {
-        
-        bcrypt.genSalt(10, async (err, salt) => {
-            
-            bcrypt.hash(password, salt, async (err, hash) => {
-                
-                let newUser = await userModel.create({
-                    fullname: fullname,
-                    username: username,
-                    email: email,
-                    password: hash
+});
+
+app.get('/login', (req, res, next) => {
+    try {
+        res.render('login');
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.get('/signup', (req, res, next) => {
+    try {
+        res.render('signup');
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.post('/create-user', async (req, res, next) => {
+    try {
+        let { fullname, username, email, password } = req.body;
+        let user = await userModel.findOne({
+            $or: [{ email: email }, { username: username }]
+        });
+        if (user) {
+            res.render('signup', { userexists: true });
+        } else {
+            bcrypt.genSalt(10, async (err, salt) => {
+                if (err) return next(err);
+                bcrypt.hash(password, salt, async (err, hash) => {
+                    if (err) return next(err);
+                    let newUser = await userModel.create({
+                        fullname: fullname,
+                        username: username,
+                        email: email,
+                        password: hash
+                    });
+                    let token = jwt.sign({ email: email, id: newUser._id }, process.env.SECRET_KEY);
+                    res.cookie('token', token);
+                    res.redirect('/');
                 });
-                
-                let token = jwt.sign({ email : email, id: newUser._id }, "secretkey");
-                res.cookie('token', token);
-                res.redirect('/');
             });
-        });
-        
-    }   
-});
-
-app.post('/login-user', async (req, res) => {
-    let { email, password } = req.body;
-    
-    let user = await userModel.findOne({ email: email });
-    if (!user) {
-        res.render('login', { usernotfound: true });
-    }
-    else {
-        bcrypt.compare(password, user.password, (err, result) => {
-            if (result) {
-                let token = jwt.sign({ email : email, id: user._id }, "secretkey");
-                res.cookie('token', token);
-                res.redirect('/');
-            }
-            else {
-                res.render('login', { passwordwrong: true });
-            }
-        });
+        }
+    } catch (err) {
+        next(err);
     }
 });
 
-app.get('/logout', (req, res) => {
-    res.clearCookie('token');
-    res.redirect('/login');
-});
-
-app.get('/myprofile', isLoggedIn, async (req, res) => {
-    let user = req.user;
-    let posts = await postModel.find({ user: user._id });
-    posts = posts.reverse();
-    res.render('myprofile', { user: user, userposts: posts });
-});
-
-app.get('/myprofile/followers', isLoggedIn, async (req, res) => {
-    let user = req.user;
-    let followers = await userModel.find({ _id: { $in: user.followers } });
-    res.render('followers_page', { user: user, followers: followers });
-});
-
-app.get('/myprofile/following', isLoggedIn, async (req, res) => {
-    let user = req.user;
-    let following = await userModel.find({ _id: { $in: user.following } });
-    res.render('following_page', { user: user, following: following });
-});
-
-app.get('/myprofile/edit', isLoggedIn, async (req, res) => {
-    let user = req.user;
-    res.render('edit_profile', { user: user });
-});
-
-app.post('/update-profile', isLoggedIn, async (req, res) => {
-    let { icon, fullname, username, bio, email } = req.body;
-    let user = req.user;
-    
-    if (username) {
-        user.username = username;
+app.post('/login-user', async (req, res, next) => {
+    try {
+        let { email, password } = req.body;
+        let user = await userModel.findOne({ email: email });
+        if (!user) {
+            res.render('login', { usernotfound: true });
+        } else {
+            bcrypt.compare(password, user.password, (err, result) => {
+                if (err) return next(err);
+                if (result) {
+                    let token = jwt.sign({ email: email, id: user._id }, process.env.SECRET_KEY);
+                    res.cookie('token', token);
+                    res.redirect('/');
+                } else {
+                    res.render('login', { passwordwrong: true });
+                }
+            });
+        }
+    } catch (err) {
+        next(err);
     }
-    if (fullname) {
-        user.fullname = fullname;
-    }
-    if (email) {
-        user.email = email;
-    }
-    if (bio) {
-        user.bio = bio;
-    }
-    if (icon) {
-        user.icon = icon;
-    }
-    
-    await user.save();
-    res.redirect('/myprofile');
 });
 
-app.get('/newpost', isLoggedIn, (req, res) => {
-    res.render('create_post', { user: req.user });
+app.get('/logout', (req, res, next) => {
+    try {
+        res.clearCookie('token');
+        res.redirect('/login');
+    } catch (err) {
+        next(err);
+    }
 });
 
-app.post('/create-post', isLoggedIn, async (req, res) => {
-    let { cardColor, content } = req.body;
-    let user = req.user;
-    
-    let newPost = await postModel.create({
-        content: content,
-        cardColor: cardColor,
-        user: user._id
-    });
-    
-    user.posts.push(newPost._id);
-    await user.save();
-    res.redirect('/myprofile');
+app.get('/myprofile', isLoggedIn, async (req, res, next) => {
+    try {
+        let user = req.user;
+        let posts = await postModel.find({ user: user._id });
+        posts = posts.reverse();
+        res.render('myprofile', { user: user, userposts: posts });
+    } catch (err) {
+        next(err);
+    }
 });
 
-app.get('/deletepost/:id', isLoggedIn, async (req, res) => {
-    let postId = req.params.id;
-    let user = req.user;
-    
-    let post = await postModel.findById(postId);
-    if (post && post.user.toString() === user._id.toString()) {
-        await postModel.deleteOne({ _id: postId });
-        user.posts = user.posts.filter(p => p.toString() !== postId);
+app.get('/myprofile/followers', isLoggedIn, async (req, res, next) => {
+    try {
+        let user = req.user;
+        let followers = await userModel.find({ _id: { $in: user.followers } });
+        res.render('followers_page', { user: user, followers: followers });
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.get('/myprofile/following', isLoggedIn, async (req, res, next) => {
+    try {
+        let user = req.user;
+        let following = await userModel.find({ _id: { $in: user.following } });
+        res.render('following_page', { user: user, following: following });
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.get('/myprofile/edit', isLoggedIn, async (req, res, next) => {
+    try {
+        let user = req.user;
+        res.render('edit_profile', { user: user });
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.post('/update-profile', isLoggedIn, async (req, res, next) => {
+    try {
+        let { icon, fullname, username, bio, email } = req.body;
+        let user = req.user;
+        if (username) user.username = username;
+        if (fullname) user.fullname = fullname;
+        if (email) user.email = email;
+        if (bio) user.bio = bio;
+        if (icon) user.icon = icon;
         await user.save();
+        res.redirect('/myprofile');
+    } catch (err) {
+        next(err);
     }
-    
-    res.redirect('/myprofile');
 });
 
-app.get('/profile/:username', isLoggedIn, async (req, res) => {
-    let username = req.params.username;
-    let otheruser = await userModel.findOne({ username: username });
-    if (!otheruser) {
-        return res.render('/');
+app.get('/newpost', isLoggedIn, (req, res, next) => {
+    try {
+        res.render('create_post', { user: req.user });
+    } catch (err) {
+        next(err);
     }
-
-    if (otheruser._id.toString() === req.user._id.toString()) {
-        return res.redirect('/myprofile');
-    }
-
-    let posts = await postModel.find({ user: otheruser._id });
-    posts = posts.reverse();
-    res.render('other_profile', { user: req.user, otheruser: otheruser, userposts: posts });
-
 });
 
-app.get('/profile/:username/followers', isLoggedIn, async (req, res) => {
-    let username = req.params.username;
-    let otheruser = await userModel.findOne({ username: username });
-    if (!otheruser) {
-        return res.redirect('/');
+app.post('/create-post', isLoggedIn, async (req, res, next) => {
+    try {
+        let { cardColor, content } = req.body;
+        let user = req.user;
+        let newPost = await postModel.create({
+            content: content,
+            cardColor: cardColor,
+            user: user._id
+        });
+        user.posts.push(newPost._id);
+        await user.save();
+        res.redirect('/myprofile');
+    } catch (err) {
+        next(err);
     }
-
-    if (otheruser._id.toString() === req.user._id.toString()) {
-        return res.redirect('/myprofile/followers');
-    }
-
-    let followers = await userModel.find({ _id: { $in: otheruser.followers } });
-    res.render('other_followers', { user: req.user, followers: followers, otheruser: otheruser });
 });
 
-app.get('/profile/:username/following', isLoggedIn, async (req, res) => {
-    let username = req.params.username;
-    let otheruser = await userModel.findOne({ username: username });
-    if (!otheruser) {
-        return res.redirect('/');
+app.get('/deletepost/:id', isLoggedIn, async (req, res, next) => {
+    try {
+        let postId = req.params.id;
+        let user = req.user;
+        let post = await postModel.findById(postId);
+        if (post && post.user.toString() === user._id.toString()) {
+            await postModel.deleteOne({ _id: postId });
+            user.posts = user.posts.filter(p => p.toString() !== postId);
+            await user.save();
+        }
+        res.redirect('/myprofile');
+    } catch (err) {
+        next(err);
     }
-    if (otheruser._id.toString() === req.user._id.toString()) {
-        return res.redirect('/myprofile/following');
-    }
-    let following = await userModel.find({ _id: { $in: otheruser.following } });
-    res.render('other_following', { user: req.user, following: following, otheruser: otheruser });
 });
 
-app.post('/toggle-like/:postId', isLoggedIn, async (req, res) => {
+app.get('/profile/:username', isLoggedIn, async (req, res, next) => {
+    try {
+        let username = req.params.username;
+        let otheruser = await userModel.findOne({ username: username });
+        if (!otheruser) {
+            return res.render('/');
+        }
+        if (otheruser._id.toString() === req.user._id.toString()) {
+            return res.redirect('/myprofile');
+        }
+        let posts = await postModel.find({ user: otheruser._id });
+        posts = posts.reverse();
+        res.render('other_profile', { user: req.user, otheruser: otheruser, userposts: posts });
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.get('/profile/:username/followers', isLoggedIn, async (req, res, next) => {
+    try {
+        let username = req.params.username;
+        let otheruser = await userModel.findOne({ username: username });
+        if (!otheruser) {
+            return res.redirect('/');
+        }
+        if (otheruser._id.toString() === req.user._id.toString()) {
+            return res.redirect('/myprofile/followers');
+        }
+        let followers = await userModel.find({ _id: { $in: otheruser.followers } });
+        res.render('other_followers', { user: req.user, followers: followers, otheruser: otheruser });
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.get('/profile/:username/following', isLoggedIn, async (req, res, next) => {
+    try {
+        let username = req.params.username;
+        let otheruser = await userModel.findOne({ username: username });
+        if (!otheruser) {
+            return res.redirect('/');
+        }
+        if (otheruser._id.toString() === req.user._id.toString()) {
+            return res.redirect('/myprofile/following');
+        }
+        let following = await userModel.find({ _id: { $in: otheruser.following } });
+        res.render('other_following', { user: req.user, following: following, otheruser: otheruser });
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.post('/toggle-like/:postId', isLoggedIn, async (req, res, next) => {
     try {
         const post = await postModel.findById(req.params.postId);
         const userId = req.user._id;
-
         if (!post) return res.status(404).send('Post not found');
-
         const index = post.likes.indexOf(userId);
         if (index === -1) {
             post.likes.push(userId);
@@ -281,7 +327,6 @@ app.post('/toggle-like/:postId', isLoggedIn, async (req, res) => {
             post.likes.splice(index, 1);
             post.likesCount -= 1;
         }
-
         await post.save();
         res.status(200).send('OK');
     } catch (err) {
@@ -290,17 +335,14 @@ app.post('/toggle-like/:postId', isLoggedIn, async (req, res) => {
     }
 });
 
-app.post('/toggle-follow/:otherUserId', isLoggedIn, async (req, res) => {
+app.post('/toggle-follow/:otherUserId', isLoggedIn, async (req, res, next) => {
     try {
         const user = req.user;
         const otherUserId = req.params.otherUserId;
-
         if (user._id.equals(otherUserId)) {
             return res.status(400).send("Can't follow yourself");
         }
-
         const isFollowing = user.following.includes(otherUserId);
-
         if (isFollowing) {
             // Unfollow
             user.following.pull(otherUserId);
@@ -310,7 +352,6 @@ app.post('/toggle-follow/:otherUserId', isLoggedIn, async (req, res) => {
             user.following.push(otherUserId);
             await userModel.findByIdAndUpdate(otherUserId, { $addToSet: { followers: user._id } });
         }
-
         await user.save();
         res.send("Success");
     } catch (err) {
@@ -319,20 +360,17 @@ app.post('/toggle-follow/:otherUserId', isLoggedIn, async (req, res) => {
     }
 });
 
-app.post('/remove-follower/:followerId', isLoggedIn, async (req, res) => {
+app.post('/remove-follower/:followerId', isLoggedIn, async (req, res, next) => {
     try {
         const user = req.user;
         const followerId = req.params.followerId;
-
         // Remove followerId from user's followers
         user.followers = user.followers.filter(id => id.toString() !== followerId);
         await user.save();
-
         // Also remove user from follower's "following" list
         await userModel.findByIdAndUpdate(followerId, {
             $pull: { following: user._id }
         });
-
         res.status(200).send('Removed');
     } catch (err) {
         console.error(err);
@@ -340,82 +378,95 @@ app.post('/remove-follower/:followerId', isLoggedIn, async (req, res) => {
     }
 });
 
-app.get('/post/:postId', isLoggedIn, async (req, res) => {
-    const postId = req.params.postId;
-    const post = await postModel.findById(postId);
-    if (!post) {
-        redirect('/');
+app.get('/post/:postId', isLoggedIn, async (req, res, next) => {
+    try {
+        const postId = req.params.postId;
+        const post = await postModel.findById(postId);
+        if (!post) {
+            return res.redirect('/');
+        }
+        const postuser = await userModel.findById(post.user);
+        if (!postuser) {
+            return res.redirect('/');
+        }
+        const comments = await commentModel.find({ post: postId });
+        comments.reverse();
+        const allusers = await userModel.find({});
+        res.render('post_page', { user: req.user, post: post, postuser: postuser, comments: comments, allusers: allusers });
+    } catch (err) {
+        next(err);
     }
-    const postuser = await userModel.findById(post.user);
-    if (!postuser) {
-        return res.redirect('/');
-    }
-    const comments = await commentModel.find({ post: postId });
-    comments.reverse();
-    const allusers = await userModel.find({});
-    res.render('post_page', { user: req.user, post: post, postuser: postuser, comments: comments, allusers: allusers });
 });
 
-app.post('/add-comment/:postId', isLoggedIn, async (req, res) => {
-    const postId = req.params.postId;
-    const comment = req.body.comment;
-    console.log(req.body);
-   
-    const post = await postModel.findById(postId);
-    if (!post) {
-        return res.status(404).send('Post not found');
+app.post('/add-comment/:postId', isLoggedIn, async (req, res, next) => {
+    try {
+        const postId = req.params.postId;
+        const comment = req.body.comment;
+        const post = await postModel.findById(postId);
+        if (!post) {
+            return res.status(404).send('Post not found');
+        }
+        const newcomment = await commentModel.create({
+            user: req.user._id,
+            content: comment,
+            post: postId
+        });
+        post.comments.push(newcomment._id);
+        await post.save();
+        res.redirect(`/post/${postId}`);
+    } catch (err) {
+        next(err);
     }
-    const newcomment = await commentModel.create({
-        user: req.user._id,
-        content: comment,
-        post: postId
-    });
-    post.comments.push(newcomment._id);
-    await post.save();
-    res.redirect(`/post/${postId}`);
 });
 
-app.get('/deletecomment/:commentId', isLoggedIn, async (req, res) => {
-    const commentId = req.params.commentId;
-    const comment = await commentModel.findById(commentId);
-
-    if (!comment) {
-        return res.status(404).send('Comment not found');
+app.get('/deletecomment/:commentId', isLoggedIn, async (req, res, next) => {
+    try {
+        const commentId = req.params.commentId;
+        const comment = await commentModel.findById(commentId);
+        if (!comment) {
+            return res.status(404).send('Comment not found');
+        }
+        if (comment.user.toString() !== req.user._id.toString()) {
+            return res.status(403).send('You are not authorized to delete this comment');
+        }
+        const post = await postModel.findById(comment.post);
+        await commentModel.deleteOne({ _id: commentId });
+        res.redirect(`/post/${post._id}`);
+    } catch (err) {
+        next(err);
     }
-    if (comment.user.toString() !== req.user._id.toString()) {
-        return res.status(403).send('You are not authorized to delete this comment');
-    }
-    const post = await postModel.findById(comment.post);
-    await commentModel.deleteOne({ _id: commentId });
-    res.redirect(`/post/${post._id}`);
-}); 
-   
-
+});
 
 function isLoggedIn(req, res, next) {
     let token = req.cookies.token;
     if (token) {
-        jwt.verify(token, "secretkey", async (err, decoded) => {
+        jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
             if (err) {
-                res.redirect('/login');
+                return res.redirect('/login');
             }
-            else {
-                const decoded = jwt.verify(token, "secretkey");
+            try {
                 const user = await userModel.findById(decoded.id);
-                
                 if (!user) {
                     return res.redirect('/login');
                 }
-                
                 req.user = user;
                 next();
-              
+            } catch (err) {
+                next(err);
             }
         });
-    }
-    else {
+    } else {
         res.redirect('/login');
     }
 }
 
-app.listen(3000)
+// Global error handler
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    if (res.headersSent) {
+        return next(err);
+    }
+    res.status(500).send('Something went wrong!');
+});
+
+app.listen(3000);

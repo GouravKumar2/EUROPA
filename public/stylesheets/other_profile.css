@@ -281,6 +281,7 @@ nav .right {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .card h2 {

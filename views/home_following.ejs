@@ -141,7 +141,7 @@
                             const user = data.allusers.find(u => u._id === post.user);
                             const liked = post.likes.includes("<%= user._id %>");
                             const html = `
-                    <div style="background-color: ${post.cardColor};" class="card">
+                    <div style="background-color: ${post.cardColor};" class="card" onclick="handleCardClick(event, '${post._id}')">
                         <a href="/profile/${user.username}" class="person-details">
                             <div class="person-icon">
                                 <img src="${user.icon}" alt="person" />
@@ -170,6 +170,19 @@
                             document.getElementById('load-more-btn').style.display = 'none';
                         }
                     });
+                </script>
+
+                <script>
+                    function handleCardClick(event, postId) {
+                        // Prevent navigation if clicking on the profile link or like button
+                        if (
+                            event.target.closest('.person-details') ||
+                            event.target.closest('.like-button')
+                        ) {
+                            return;
+                        }
+                        window.location.href = '/post/' + postId;
+                    }
                 </script>
 
 

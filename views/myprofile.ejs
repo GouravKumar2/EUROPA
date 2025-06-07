@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Profile</title>
-   <link rel="icon" type="image/x-icon" href="/media/europa-icon.png">
+    <link rel="icon" type="image/x-icon" href="/media/europa-icon.png">
     <link rel="stylesheet" href="/stylesheets/profile.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -102,7 +102,8 @@
 
                             <% userposts.forEach(function(post) { %>
 
-                                <div class="card" style="background-color: <%= post.cardColor %>;">
+                                <div class="card" style="background-color: <%= post.cardColor %>;"
+                                    onclick="handleCardClick(event, '<%= post._id %>')">
                                     <div class="person-details">
                                         <div class="person-icon">
                                             <img src="<%=user.icon%>" alt="person" />
@@ -112,13 +113,15 @@
                                         </div>
                                     </div>
                                     <!-- <h2>Post Title</h2> -->
-                                   
+
                                     <p>
-                                        <%- post.content.replace(/\n/g, '<br>') %>
+                                        <%- post.content.replace(/\n/g, '<br>' ) %>
                                     </p>
-    
+
                                     <div class="card-footer">
-                                        <div class="datecontainer"><%=timeAgo(post.date)%></div>
+                                        <div class="datecontainer">
+                                            <%=timeAgo(post.date)%>
+                                        </div>
                                         <div class="like-container">
                                             <button
                                                 class="like-button <%= post.likes.includes(user._id) ? 'liked' : '' %>"
@@ -185,6 +188,19 @@
                 button.classList.toggle("liked");
                 countSpan.textContent = liked ? count : count - 1;
             }
+        }
+    </script>
+
+    <script>
+        function handleCardClick(event, postId) {
+            // Prevent navigation if clicking on the profile link or like button
+            if (
+                event.target.closest('.person-details') ||
+                event.target.closest('.like-button')
+            ) {
+                return;
+            }
+            window.location.href = '/post/' + postId;
         }
     </script>
 </body>

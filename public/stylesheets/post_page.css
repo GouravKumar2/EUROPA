@@ -12,6 +12,16 @@ body {
   background-color: #e7e4de;
 }
 
+
+.hacks {
+  width: 100%;
+  height: 120px;
+  background-color: #e7e4de;
+  position: fixed;
+  top: 0;
+  z-index: 500;
+}
+
 nav {
   width: 95%;
   border-radius: 100px;
@@ -39,55 +49,12 @@ nav .left h1 {
   margin-left: 30px;
 }
 
-.following-feed {
-  font-family: "Figtree", sans-serif;
-  padding: 8px 20px;
-  border-radius: 30px;
-  font-size: 20px;
-  background-color: #69444b;
-  color: #e7e4de;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.discover-feed {
-  font-family: "Figtree", sans-serif;
-  padding: 6px 18px;
-  border-radius: 30px;
-  font-size: 20px;
-  color: #69444b;
-  border: 2px solid #69444b;
-  margin-left: 40px;
-  cursor: pointer;
-}
-
-.discover {
-  font-family: "Figtree", sans-serif;
-  padding: 8px 20px;
-  border-radius: 30px;
-  font-size: 20px;
-  background-color: #69444b;
-  color: #e7e4de;
-  margin-left: 40px;
-  cursor: pointer;
-}
-
-.following {
-  font-family: "Figtree", sans-serif;
-  padding: 6px 18px;
-  border-radius: 30px;
-  font-size: 20px;
-  color: #69444b;
-  border: 2px solid #69444b;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
 nav .right {
   display: flex;
   align-items: center;
   margin-right: 1vw;
 }
+
 
 #create-post {
   width: 150px;
@@ -105,6 +72,7 @@ nav .right {
   font-weight: 700;
 }
 
+
 #create-post-icon {
   width: 40px;
   height: 40px;
@@ -116,6 +84,7 @@ nav .right {
   align-items: center;
   display: none;
 }
+
 
 #profile-icon {
   width: 50px;
@@ -145,42 +114,24 @@ nav .right {
   text-decoration: none;
 }
 
-.hacks {
+.main {
   width: 100%;
-  height: 120px;
-  background-color: #e7e4de;
-  position: fixed;
-  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 30px;
 }
 
-.main {
-  width: 95%;
-  margin: 20px auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+.postarea {
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
-@media (max-width: 1200px) {
-  .main {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 800px) {
-  .main {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 500px) {
-  .main {
-    grid-template-columns: 1fr;
-  }
-}
-
 .card {
-  min-height: 200px;
+  width: 400px;
+  min-height: 300px;
   background-color: #fb6f92;
   border-radius: 30px;
   padding: 20px;
@@ -273,12 +224,166 @@ nav .right {
   font-weight: bold;
 }
 
+.addcomment {
+  padding: 20px;
+  border-radius: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  background-color: #d1c2bc;
+}
+
+.addcomment h2 {
+  font-family: "Figtree", sans-serif;
+  font-size: 24px;
+  color: #42242a;
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+
+#comment-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#comment-form textarea {
+  width: 100%;
+  height: 100px;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+  font-family: "Figtree", sans-serif;
+  font-size: 16px;
+  color: #42242a;
+  background-color: #eaeaea;
+  resize: none;
+}
+
+#comment-form button {
+  width: 100%;
+  height: 40px;
+  background-color: #42242a;
+  color: #fff;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Figtree", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  margin-top: 15px;
+  transition: background 0.2s, color 0.2s;
+}
+
+#comment-form button:hover {
+  background-color: #7a4d48;
+  color: #fff;
+}
+
+.commentsbox {
+  width: 500px;
+  min-height: 550px;
+  max-height: 550px;
+  background-color: #d1c2bc;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.commentsbox h1 {
+  font-family: "Figtree", monospace;
+  font-size: 28px;
+  color: #42242a;
+  margin-bottom: 10px;
+}
+
+.comments-list {
+  width: 100%;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  /* Ensures scroll only for the list */
+}
+
+.commentcard {
+  width: 100%;
+  padding: 10px;
+  background-color: #a09591;
+  color: #e7e4de;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.comment-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0; /* Fixes overflow issues in flex */
+}
+
+.commentcard a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  text-decoration: none;
+}
+
+.commentcard a h2 {
+  font-family: "Figtree", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: #36322f;
+}
+
+.commentcard a img {
+  width: 35px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.commentcard p {
+  font-family: "Figtree", monospace;
+  font-weight: 500;
+  font-size: 16px;
+  color: #42242a;
+}
+
+.deletecomment {
+  padding-right: 3px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 @media (max-width: 1080px) {
   #username {
     display: none;
   }
 
-  #create-post{
+   #create-post{
     display: none;
   }
   #create-post-icon {
@@ -286,114 +391,35 @@ nav .right {
     margin-right: 10px;
   }
 
-  /* .following-feed {
-  font-family: "Figtree", sans-serif;
-  padding: 8px 10px;
-  border-radius: 30px;
-  font-size: 10px;
-  background-color: #69444b;
-  color: #e7e4de;
-  margin-left: 5px;
-  cursor: pointer;
-}
-
-.discover-feed {
-  font-family: "Figtree", sans-serif;
-  padding: 6px 8px;
-  border-radius: 30px;
-  font-size: 10px;
-  color: #69444b;
-  border: 2px solid #69444b;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-nav .left h1 {
-  font-family: "Climate Crisis", sans-serif;
-  font-size: 15px;
-  color: #42242a;
-  letter-spacing: 0px;
-  margin-left: 15px;
-} */
-}
-
-
-@media (max-width: 720px) {
-  #username {
-    display: none;
-  }
-
-  #create-post{
-    display: none;
-  }
-  #create-post-icon {
+  #profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    object-fit: cover;
     display: flex;
-    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: #42242a;
+    margin-right: 5px;
   }
 
-  .following-feed {
-  font-family: "Figtree", sans-serif;
-  padding: 8px 10px;
-  border-radius: 30px;
-  font-size: 10px;
-  background-color: #69444b;
-  color: #e7e4de;
-  margin-left: 5px;
-  cursor: pointer;
-}
+  .main {
+    flex-direction: column;
+    align-items: center;
+  }
 
-.discover-feed {
-  font-family: "Figtree", sans-serif;
-  padding: 6px 8px;
-  border-radius: 30px;
-  font-size: 10px;
-  color: #69444b;
-  border: 2px solid #69444b;
-  margin-left: 10px;
-  cursor: pointer;
-}
+  .postarea {
+    width: 95%;
+    align-items: center;
+  }
 
-nav .left h1 {
-  font-family: "Climate Crisis", sans-serif;
-  font-size: 15px;
-  color: #42242a;
-  letter-spacing: 0px;
-  margin-left: 15px;
-}
+  .card {
+    width: 100%;
+  }
 
-
-.discover {
- font-family: "Figtree", sans-serif;
-  padding: 8px 10px;
-  border-radius: 30px;
-  font-size: 10px;
-  background-color: #69444b;
-  color: #e7e4de;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.following {
-  font-family: "Figtree", sans-serif;
-  padding: 6px 8px;
-  border-radius: 30px;
-  font-size: 10px;
-  color: #69444b;
-  border: 2px solid #69444b;
-  margin-left: 5px;
-  cursor: pointer;
-}
-
-#profile-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  object-fit: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #42242a;
-  margin-right: 5px;
-}
+  .commentsbox {
+    width: 95%;
+    max-height: 400px;
+  }
 }

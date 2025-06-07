@@ -98,52 +98,52 @@
 
 
 
-        <script>
-            async function toggleLike(button, postId) {
-                const countSpan = button.nextElementSibling;
-                let count = parseInt(countSpan.textContent);
-                const liked = button.classList.toggle("liked");
-                countSpan.textContent = liked ? count + 1 : count - 1;
+                <script>
+                    async function toggleLike(button, postId) {
+                        const countSpan = button.nextElementSibling;
+                        let count = parseInt(countSpan.textContent);
+                        const liked = button.classList.toggle("liked");
+                        countSpan.textContent = liked ? count + 1 : count - 1;
 
-                try {
-                    const res = await fetch(`/toggle-like/${postId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
+                        try {
+                            const res = await fetch(`/toggle-like/${postId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+
+                            if (!res.ok) {
+                                throw new Error('Failed to toggle like');
+                            }
+                        } catch (err) {
+                            console.error(err);
+                            // Revert UI change on error
+                            button.classList.toggle("liked");
+                            countSpan.textContent = liked ? count : count - 1;
                         }
-                    });
-
-                    if (!res.ok) {
-                        throw new Error('Failed to toggle like');
                     }
-                } catch (err) {
-                    console.error(err);
-                    // Revert UI change on error
-                    button.classList.toggle("liked");
-                    countSpan.textContent = liked ? count : count - 1;
-                }
-            }
-        </script>
+                </script>
 
-        <script>
-            let currentPage = 1;
+                <script>
+                    let currentPage = 1;
 
-            document.getElementById('load-more-btn').addEventListener('click', async () => {
-                currentPage++;
-                const res = await fetch(`/home?page=${currentPage}`, {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                });
-                const data = await res.json();
+                    document.getElementById('load-more-btn').addEventListener('click', async () => {
+                        currentPage++;
+                        const res = await fetch(`/home?page=${currentPage}`, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        });
+                        const data = await res.json();
 
-                const container = document.getElementById('post-container');
+                        const container = document.getElementById('post-container');
 
-                for (let post of data.posts) {
-                    const user = data.allusers.find(u => u._id === post.user);
-                    const liked = post.likes.includes("<%= user._id %>");
-                    const html = `
-                    <div style="background-color: ${post.cardColor};" class="card">
+                        for (let post of data.posts) {
+                            const user = data.allusers.find(u => u._id === post.user);
+                            const liked = post.likes.includes("<%= user._id %>");
+                            const html = `
+                    <div style="background-color: ${post.cardColor};" class="card" onclick="handleCardClick(event, '${post._id}')">
                         <a href="/profile/${user.username}" class="person-details">
                             <div class="person-icon">
                                 <img src="${user.icon}" alt="person" />
@@ -165,14 +165,28 @@
                             </div>
                         </div>
                     </div>`;
-                    container.insertAdjacentHTML('beforeend', html);
-                }
+                            container.insertAdjacentHTML('beforeend', html);
+                        }
 
-                if (!data.hasMore) {
-                    document.getElementById('load-more-btn').style.display = 'none';
-                }
-            });
-        </script>
+                        if (!data.hasMore) {
+                            document.getElementById('load-more-btn').style.display = 'none';
+                        }
+                    });
+                </script>
+
+
+                <script>
+                    function handleCardClick(event, postId) {
+                        // Prevent navigation if clicking on the profile link or like button
+                        if (
+                            event.target.closest('.person-details') ||
+                            event.target.closest('.like-button')
+                        ) {
+                            return;
+                        }
+                        window.location.href = '/post/' + postId;
+                    }
+                </script>
 
 
 </body>

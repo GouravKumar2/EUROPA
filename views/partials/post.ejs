@@ -20,7 +20,7 @@
     return 'just now';
 } %>
 
-<div style="background-color: <%= post.cardColor %>;" class="card">
+<div style="background-color: <%= post.cardColor %>;" class="card" onclick="handleCardClick(event, '<%= post._id %>')">
     <a href="/profile/<%=postuser.username%>" class="person-details">
         <div class="person-icon">
             <img src="<%=postuser.icon%>" alt="person" />

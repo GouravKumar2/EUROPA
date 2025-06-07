@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 
 const userModel = require('./models/user');
 const postModel = require('./models/post'); 
+const commentModel = require('./models/comment');
 
 
 
@@ -73,8 +74,6 @@ app.get('/home/following', isLoggedIn, async (req, res) => {
         hasMore
     });
 });
-
-
 
 app.get('/login', (req, res) => {
     res.render('login');
@@ -340,6 +339,57 @@ app.post('/remove-follower/:followerId', isLoggedIn, async (req, res) => {
         res.status(500).send('Error removing follower');
     }
 });
+
+app.get('/post/:postId', isLoggedIn, async (req, res) => {
+    const postId = req.params.postId;
+    const post = await postModel.findById(postId);
+    if (!post) {
+        redirect('/');
+    }
+    const postuser = await userModel.findById(post.user);
+    if (!postuser) {
+        return res.redirect('/');
+    }
+    const comments = await commentModel.find({ post: postId });
+    comments.reverse();
+    const allusers = await userModel.find({});
+    res.render('post_page', { user: req.user, post: post, postuser: postuser, comments: comments, allusers: allusers });
+});
+
+app.post('/add-comment/:postId', isLoggedIn, async (req, res) => {
+    const postId = req.params.postId;
+    const comment = req.body.comment;
+    console.log(req.body);
+   
+    const post = await postModel.findById(postId);
+    if (!post) {
+        return res.status(404).send('Post not found');
+    }
+    const newcomment = await commentModel.create({
+        user: req.user._id,
+        content: comment,
+        post: postId
+    });
+    post.comments.push(newcomment._id);
+    await post.save();
+    res.redirect(`/post/${postId}`);
+});
+
+app.get('/deletecomment/:commentId', isLoggedIn, async (req, res) => {
+    const commentId = req.params.commentId;
+    const comment = await commentModel.findById(commentId);
+
+    if (!comment) {
+        return res.status(404).send('Comment not found');
+    }
+    if (comment.user.toString() !== req.user._id.toString()) {
+        return res.status(403).send('You are not authorized to delete this comment');
+    }
+    const post = await postModel.findById(comment.post);
+    await commentModel.deleteOne({ _id: commentId });
+    res.redirect(`/post/${post._id}`);
+}); 
+   
 
 
 function isLoggedIn(req, res, next) {

@@ -73,6 +73,18 @@ nav .right {
   display: none;
 }
 
+
+#search {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  border-radius: 30px;
+  background-color: #a881bf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #profile-icon {
   width: 50px;
   height: 50px;
@@ -269,7 +281,6 @@ nav .right {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    /* Ensures scroll only for the list */
 }
 
 .followcard {
@@ -350,6 +361,10 @@ nav .right {
   }
   #create-post-icon {
     display: flex;
+    margin-right: 10px;
+  }
+
+   #search{
     margin-right: 10px;
   }
 

@@ -24,6 +24,11 @@
             </a>
         </div>
         <div class="right">
+             <a href="/search" id="search"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                    width="24px" fill="#42242a">
+                    <path
+                        d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                </svg></a>
             <a href="/newpost" id="create-post">NEW POST</a>
             <a href="/newpost" id="create-post-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px"
                     viewBox="0 -960 960 960" width="30px" fill="#42242a">
@@ -36,8 +41,6 @@
             </a>
         </div>
     </nav>
-
-    <!-- trying out sidebar with position fixed -->
 
     <div class="actualmain">
 
@@ -112,47 +115,54 @@
                                             @<%=user.username%>
                                         </div>
                                     </div>
-                                    <!-- <h2>Post Title</h2> -->
 
                                     <p>
                                         <%- post.content.replace(/\n/g, '<br>' ) %>
                                     </p>
 
-                                    <div class="card-footer">
-                                        <div class="datecontainer">
-                                            <%=timeAgo(post.date)%>
+                                    <% if (post.image) { %>
+                                        <div class="post-image">
+                                            <img src="<%= post.image %>" alt="Post image">
                                         </div>
-                                        <div class="like-container">
-                                            <button
-                                                class="like-button <%= post.likes.includes(user._id) ? 'liked' : '' %>"
-                                                onclick="toggleLike(this, '<%= post._id %>')">
-                                                <!-- Unliked (outlined heart) -->
-                                                <svg class="heart-outline" xmlns="http://www.w3.org/2000/svg"
-                                                    height="30px" viewBox="0 -960 960 960" width="30px" fill="#42242a">
-                                                    <path
-                                                        d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
-                                                </svg>
+                                        <% } %>
 
-                                                <!-- Liked (filled heart) -->
-                                                <svg class="heart-filled" xmlns="http://www.w3.org/2000/svg"
-                                                    height="30px" viewBox="0 -960 960 960" width="30px" fill="#42242a">
-                                                    <path
-                                                        d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Z" />
-                                                </svg>
-                                            </button>
-                                            <span class="like-count">
-                                                <%=post.likesCount%>
-                                            </span>
 
-                                            <a href="/deletepost/<%=post._id%>" class="delete-button">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="30px"
-                                                    viewBox="0 -960 960 960" width="30px" fill="#e3e3e3">
-                                                    <path
-                                                        d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </div>
+                                            <div class="card-footer">
+                                                <div class="datecontainer">
+                                                    <%=timeAgo(post.date)%>
+                                                </div>
+                                                <div class="like-container">
+                                                    <button
+                                                        class="like-button <%= post.likes.includes(user._id) ? 'liked' : '' %>"
+                                                        onclick="toggleLike(this, '<%= post._id %>')">
+                                                      
+                                                        <svg class="heart-outline" xmlns="http://www.w3.org/2000/svg"
+                                                            height="30px" viewBox="0 -960 960 960" width="30px"
+                                                            fill="#42242a">
+                                                            <path
+                                                                d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z" />
+                                                        </svg>
+
+                                                        <svg class="heart-filled" xmlns="http://www.w3.org/2000/svg"
+                                                            height="30px" viewBox="0 -960 960 960" width="30px"
+                                                            fill="#42242a">
+                                                            <path
+                                                                d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Z" />
+                                                        </svg>
+                                                    </button>
+                                                    <span class="like-count">
+                                                        <%=post.likesCount%>
+                                                    </span>
+
+                                                    <a href="/deletepost/<%=post._id%>" class="delete-button">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" height="30px"
+                                                            viewBox="0 -960 960 960" width="30px" fill="#e3e3e3">
+                                                            <path
+                                                                d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </div>
                                 </div>
 
                                 <% }); %>
@@ -184,7 +194,7 @@
                 }
             } catch (err) {
                 console.error(err);
-                // Revert UI change on error
+
                 button.classList.toggle("liked");
                 countSpan.textContent = liked ? count : count - 1;
             }
@@ -193,7 +203,6 @@
 
     <script>
         function handleCardClick(event, postId) {
-            // Prevent navigation if clicking on the profile link or like button
             if (
                 event.target.closest('.person-details') ||
                 event.target.closest('.like-button')

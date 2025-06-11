@@ -156,132 +156,92 @@ nav .right {
   text-decoration: none;
 }
 
-.hacks {
-  width: 100%;
-  height: 120px;
-  background-color: #e7e4de;
-  position: fixed;
-  top: 0;
-}
+
 
 .main {
-  width: 95%;
-  margin: 20px auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
-@media (max-width: 1200px) {
-  .main {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.followersbox{
+    width :60%;
+    min-height: 550px;
+    max-height: 550px;
+    background-color: #d1c2bc;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap :10px;
+    padding: 20px;
+    overflow: hidden;
 }
 
-@media (max-width: 800px) {
-  .main {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.followersbox h1{
+    font-family: "Figtree", monospace;
+    font-size: 28px;
+    color: #42242a;
+    margin-bottom: 10px;
 }
 
-@media (max-width: 500px) {
-  .main {
-    grid-template-columns: 1fr;
-  }
+.followers-list {
+    width: 100%;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+   
 }
 
-.card {
-  min-height: 200px;
-  background-color: #fb6f92;
-  border-radius: 30px;
-  padding: 20px;
-  font-family: "Figtree", sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
+.usercard {
+    width :90%;
+    min-height: 50px;
+    background-color: #5e3f45;
+    color: #e7e4de;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
 }
 
-.card h2 {
-  font-size: 24px;
-  color: #2f1a1e;
-  margin-bottom: 10px;
+.usercard a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    margin-left: 10px;
 }
 
-.card p {
-  font-size: 16px;
-  font-weight: 500;
-  color: #42242a;
-  margin-bottom: 10px;
+.usercard a h2{
+    font-family: "Figtree", monospace;
+    font-size: 16px;
+    font-weight: 500;
+    color: #e7e4de;
 }
 
-.person-details {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+.usercard a img{
+    width: 35px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-.person-icon img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-  object-fit: cover;
-}
-
-.person-name {
-  color: #42242a;
-  font-weight: 600;
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-}
-
-.datecontainer {
-  font-family: "Figtree", sans-serif;
-  font-size: 14px;
-  color: #5e3a43;
-}
-
-.like-container {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 5px;
-  margin-right: 10px;
-}
-
-.like-button {
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  cursor: pointer;
-  transition: transform 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.heart-filled {
-  display: none;
-}
-
-.like-button.liked .heart-outline {
-  display: none;
-}
-
-.like-button.liked .heart-filled {
-  display: inline;
-}
-
-.like-count {
-  color: #42242a;
-  font-family: "Figtree", monospace;
-  font-size: 22px;
-  font-weight: bold;
+#searchbar{
+    width: 90%;
+    height: 40px;
+    background-color:#e7e4de;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    outline: none;
+    border: 2px solid #69444b;
+    font-family: "Figtree", sans-serif;
 }
 
 @media (max-width: 1080px) {
@@ -297,35 +257,6 @@ nav .right {
     margin-right: 10px;
   }
 
-  /* .following-feed {
-  font-family: "Figtree", sans-serif;
-  padding: 8px 10px;
-  border-radius: 30px;
-  font-size: 10px;
-  background-color: #69444b;
-  color: #e7e4de;
-  margin-left: 5px;
-  cursor: pointer;
-}
-
-.discover-feed {
-  font-family: "Figtree", sans-serif;
-  padding: 6px 8px;
-  border-radius: 30px;
-  font-size: 10px;
-  color: #69444b;
-  border: 2px solid #69444b;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-nav .left h1 {
-  font-family: "Climate Crisis", sans-serif;
-  font-size: 15px;
-  color: #42242a;
-  letter-spacing: 0px;
-  margin-left: 15px;
-} */
 }
 
 
@@ -425,7 +356,13 @@ nav .left h1 {
   background-color: #42242a;
   margin-right: 5px;
 }
+
+.followersbox{
+    width: 90%;
 }
+}
+
+
 
 
 .post-image img {

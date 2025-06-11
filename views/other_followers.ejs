@@ -23,6 +23,11 @@
             </a>
         </div>
         <div class="right">
+             <a href="/search" id="search"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                    width="24px" fill="#42242a">
+                    <path
+                        d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                </svg></a>
             <a href="/newpost" id="create-post">NEW POST</a>
             <a href="/newpost" id="create-post-icon"><svg xmlns="http://www.w3.org/2000/svg" height="30px"
                     viewBox="0 -960 960 960" width="30px" fill="#42242a">
@@ -36,7 +41,6 @@
         </div>
     </nav>
 
-    <!-- trying out sidebar with position fixed -->
 
     <div class="actualmain">
 
@@ -76,7 +80,7 @@
             <div class="followersbox">
                 <h1>Followers</h1>
                 <div class="followers-list">
-                    <!-- Begin followers loop here -->
+
                     <% followers.forEach(function(follower) { %>
                         <div class="followcard">
                             <a href="/profile/<%=follower.username%>" class="accountinfo">
@@ -84,15 +88,9 @@
                                 <h2>@<%=follower.username%>
                                 </h2>
                             </a>
-                            <!-- <div class="buttons">
-                        <button class="followBtn <%= user.following.includes(follower._id) ? '' : 'followactive' %>"
-                            data-user-id="<%= follower._id %>" onclick="toggleFollow(this, '<%= follower._id %>')">
-                            <%= user.following.includes(follower._id) ? 'Following' : 'Follow' %>
-                        </button>
-                    </div> -->
+                          
                         </div>
                         <% }); %>
-                            <!-- End followers loop here -->
                 </div>
             </div>
         </div>
@@ -116,11 +114,9 @@
 
                 if (!res.ok) throw new Error("Request failed");
 
-                // Toggle class and text
                 btn.classList.toggle("following");
                 btn.textContent = isFollowing ? "Follow" : "Following";
 
-                // Update followers count
                 let currentCount = parseInt(followersCountSpan.textContent);
                 followersCountSpan.textContent = isFollowing ? currentCount - 1 : currentCount + 1;
 

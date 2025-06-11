@@ -61,7 +61,7 @@ nav .right {
     height: auto;
     background-color: #d2ade7;
     border-radius: 40px;
-    overflow: hidden; /* ✅ hides anything that overflows the rounded corners */
+    overflow: hidden;
     background-image: url('/media/europa-bg.png');
     background-size: cover;
     background-position: center;
@@ -204,7 +204,7 @@ nav .right {
     color: #42242a;
 }
 
-/* Responsive Design */
+
 
 @media (max-width: 700px) {
   .main {

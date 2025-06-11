@@ -81,6 +81,18 @@ nav .right {
   display: none;
 }
 
+
+#search {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  border-radius: 30px;
+  background-color: #a881bf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #profile-icon {
   width: 50px;
   height: 50px;
@@ -171,7 +183,6 @@ nav .right {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .follow {
@@ -179,7 +190,7 @@ nav .right {
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .follow a {
@@ -216,6 +227,23 @@ nav .right {
   margin-bottom: 10px;
   transition: background 0.2s, color 0.2s;
 }
+.sidebar-links a[href="/password"] {
+  width: 100%;
+  height: 40px;
+  background-color: #fff;
+  color: #42242a;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Figtree", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+   margin-bottom: 10px;
+}
 
 .sidebar-links a[href="/logout"] {
   width: 100%;
@@ -232,6 +260,7 @@ nav .right {
   text-decoration: none;
   border: none;
   transition: background 0.2s, color 0.2s;
+  
 }
 
 .sidebar-links a[href="/logout"]:hover {
@@ -408,6 +437,10 @@ nav .right {
     margin-right: 10px;
   }
 
+  #search{
+    margin-right: 10px;
+  }
+
 
 
   .actualmain {
@@ -571,4 +604,13 @@ nav .right {
   margin-right: 5px;
 }
  
+}
+
+
+.post-image img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  margin: 10px 0;
+  border-radius: 10px;
 }

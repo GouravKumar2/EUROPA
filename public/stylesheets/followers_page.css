@@ -73,6 +73,18 @@ nav .right {
   display: none;
 }
 
+
+#search {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  border-radius: 30px;
+  background-color: #a881bf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #profile-icon {
   width: 50px;
   height: 50px;
@@ -313,7 +325,7 @@ nav .right {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%; /* Ensure it fills parent height */
+    height: 100%; 
 }
 
 .buttons button {
@@ -331,7 +343,7 @@ nav .right {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box; /* prevents borders from increasing element height */
+    box-sizing: border-box; 
     padding: 0 12px;
 }
 
@@ -351,7 +363,7 @@ nav .right {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box; /* prevents borders from increasing element height */
+    box-sizing: border-box; 
     padding: 0 12px;
 }
 
@@ -383,6 +395,10 @@ nav .right {
   }
   #create-post-icon {
     display: flex;
+    margin-right: 10px;
+  }
+
+   #search{
     margin-right: 10px;
   }
 

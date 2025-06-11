@@ -25,7 +25,6 @@
     </nav>
 
     <div class="main">
-        <!-- The actual div names are from the sigup page that's why they are the same, but the functionality is different. -->
 
         <div class="info">
             <h1>EUROPA</h1>
@@ -40,6 +39,9 @@
 
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
+                    <div class="forgot" onclick="window.location.href='/password'">
+                       Forgot Password?
+                    </div>
                     <% if (typeof usernotfound !== 'undefined' && usernotfound || typeof passwordwrong !== 'undefined' && passwordwrong) { %>
                         <p style="color: red; font-size: 0.9em; margin-top: 8px;">Either username or password wrong</p>
                     <% } %>

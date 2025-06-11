@@ -11,6 +11,9 @@ const userModel = require('./models/user');
 const postModel = require('./models/post'); 
 const commentModel = require('./models/comment');
 
+const upload = require('./config/cloudinaryStorage');
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -204,17 +207,20 @@ app.get('/myprofile/edit', isLoggedIn, async (req, res, next) => {
     }
 });
 
-app.post('/update-profile', isLoggedIn, async (req, res, next) => {
+app.post('/update-profile', isLoggedIn, upload.single('icon'), async (req, res, next) => {
     try {
-        let { icon, fullname, username, bio, email } = req.body;
+        let { fullname, username, bio, email } = req.body;
+        const icon = req.file ? req.file.path : req.user.icon;
+
         let user = req.user;
-        if (username) user.username = username;
-        if (fullname) user.fullname = fullname;
-        if (email) user.email = email;
-        if (bio) user.bio = bio;
-        if (icon) user.icon = icon;
+        user.username = username || user.username;
+        user.fullname = fullname || user.fullname;
+        user.email = email || user.email;
+        user.bio = bio || user.bio;
+        user.icon = icon;
         await user.save();
         res.redirect('/myprofile');
+
     } catch (err) {
         next(err);
     }
@@ -228,22 +234,28 @@ app.get('/newpost', isLoggedIn, (req, res, next) => {
     }
 });
 
-app.post('/create-post', isLoggedIn, async (req, res, next) => {
-    try {
-        let { cardColor, content } = req.body;
-        let user = req.user;
-        let newPost = await postModel.create({
-            content: content,
-            cardColor: cardColor,
-            user: user._id
-        });
-        user.posts.push(newPost._id);
-        await user.save();
-        res.redirect('/myprofile');
-    } catch (err) {
-        next(err);
-    }
+app.post('/create-post', isLoggedIn, upload.single('postImage'), async (req, res, next) => {
+  try {
+    const { cardColor, content } = req.body;
+    const user = req.user;
+    const image = req.file ? req.file.path : "";
+
+    const newPost = await postModel.create({
+      content,
+      cardColor,
+      image,
+      user: user._id
+    });
+
+    user.posts.push(newPost._id);
+    await user.save();
+
+    res.redirect('/myprofile');
+  } catch (err) {
+    next(err);
+  }
 });
+
 
 app.get('/deletepost/:id', isLoggedIn, async (req, res, next) => {
     try {
@@ -343,11 +355,11 @@ app.post('/toggle-follow/:otherUserId', isLoggedIn, async (req, res, next) => {
         }
         const isFollowing = user.following.includes(otherUserId);
         if (isFollowing) {
-            // Unfollow
+            
             user.following.pull(otherUserId);
             await userModel.findByIdAndUpdate(otherUserId, { $pull: { followers: user._id } });
         } else {
-            // Follow
+            
             user.following.push(otherUserId);
             await userModel.findByIdAndUpdate(otherUserId, { $addToSet: { followers: user._id } });
         }
@@ -363,10 +375,10 @@ app.post('/remove-follower/:followerId', isLoggedIn, async (req, res, next) => {
     try {
         const user = req.user;
         const followerId = req.params.followerId;
-        // Remove followerId from user's followers
+        
         user.followers = user.followers.filter(id => id.toString() !== followerId);
         await user.save();
-        // Also remove user from follower's "following" list
+        
         await userModel.findByIdAndUpdate(followerId, {
             $pull: { following: user._id }
         });
@@ -392,6 +404,28 @@ app.get('/post/:postId', isLoggedIn, async (req, res, next) => {
         comments.reverse();
         const allusers = await userModel.find({});
         res.render('post_page', { user: req.user, post: post, postuser: postuser, comments: comments, allusers: allusers });
+    } catch (err) {
+        next(err);
+    }
+});
+
+app.get('/post/:postId/likes', isLoggedIn, async (req, res, next) => {
+    try {
+        const postId = req.params.postId;
+        const post = await postModel.findById(postId);
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+        const postuser = await userModel.findById(post.user);
+        if (!postuser) {
+            return res.redirect('/');
+        }
+        const comments = await commentModel.find({ post: postId });
+        comments.reverse();
+        const allusers = await userModel.find({});
+        
+        const likedUsers = await userModel.find({ _id: { $in: post.likes } });
+        res.render('post_page_likes', { user: req.user, post: post, postuser: postuser, comments : comments, likedUsers: likedUsers });
     } catch (err) {
         next(err);
     }
@@ -459,7 +493,100 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-// Global error handler
+
+app.get('/password', (req, res, next) => {
+    try {
+        res.render('password', { user: req.user });
+    } catch (err) {
+        next(err);
+    }
+});
+
+
+const nodemailer = require("nodemailer");
+const otpStore = {};
+
+app.post('/forgot-password', async (req, res, next) => {
+  const { email } = req.body;
+  try {
+    const user = await userModel.findOne({ email });
+    if (!user) return res.status(400).json({ msg: "User not found" });
+
+    const otp = Math.floor(100000 + Math.random() * 900000); 
+    otpStore[email] = { otp, expiresAt: Date.now() + 5 * 60 * 1000 }; 
+
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD 
+      }
+    });
+
+    await transporter.sendMail({
+      from: '"Europa Support" <' + process.env.EMAIL + '>',
+      to: email,
+      subject: "Your OTP for Password Reset",
+      text: `Your OTP is ${otp}. It expires in 5 minutes.`,
+    });
+
+    res.json({ msg: "OTP sent" });
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+app.post('/verify-otp', (req, res, next) => {
+  const { email, otp } = req.body;
+  const record = otpStore[email];
+
+  if (!record || record.otp != otp || Date.now() > record.expiresAt) {
+    return res.status(400).json({ msg: "Invalid or expired OTP" });
+  }
+
+  const token = jwt.sign({ email }, process.env.SECRET_KEY, { expiresIn: "10m" });
+  res.json({ msg: "OTP verified", token });
+});
+
+
+app.post('/reset-password', async (req, res, next) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    const { email } = jwt.verify(token, process.env.SECRET_KEY);
+    const hashed = await bcrypt.hash(newPassword, 10);
+    await userModel.findOneAndUpdate({ email }, { password: hashed });
+
+    delete otpStore[email];
+    res.json({ msg: "Password updated" });
+  } catch (err) {
+    return res.status(401).json({ msg: "Invalid or expired token" });
+  }
+});
+
+
+app.get('/search', isLoggedIn, async (req, res, next) => {
+   res.render('search', { user: req.user });
+});
+
+app.get('/api/search-users', isLoggedIn, async (req, res, next) => {
+    try {
+        const query = req.query.q;
+        if (!query) return res.json([]);
+
+        const users = await userModel.find({
+            username: { $regex: query, $options: 'i' }
+        }).limit(10);
+
+        res.json(users);
+    } catch (err) {
+        next(err);
+    }
+});
+
+
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
     if (res.headersSent) {
@@ -467,6 +594,7 @@ app.use((err, req, res, next) => {
     }
     res.status(500).send('Something went wrong!');
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

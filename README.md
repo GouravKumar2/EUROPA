@@ -93,3 +93,8 @@ EUROPA/
 - **Customizable Posts:** Users can pick card colors and upload images.
 - **Modern UI:** All pages are styled for a clean, modern look.
 
+![image](https://github.com/user-attachments/assets/e913fa95-ea28-4307-92c0-ab36054f7b09)
+![image](https://github.com/user-attachments/assets/fbc4d2a6-0803-4d17-88e1-b148136f38f8)
+![image](https://github.com/user-attachments/assets/a30544f8-71f6-4754-bcb8-0ee6dc27888a)
+![image](https://github.com/user-attachments/assets/036de3b4-0a84-4ec5-b58c-39c5070a0423)
+![image](https://github.com/user-attachments/assets/24492384-a054-4a59-9ccd-276602aa8d66)

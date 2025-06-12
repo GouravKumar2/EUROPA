@@ -61,7 +61,7 @@ nav .right {
   height: auto;
   background-color: #d2ade7;
   border-radius: 40px;
-  overflow: hidden; 
+  overflow: hidden;
   background-image: url("/media/europa-bg.png");
   background-size: cover;
   background-position: center;
@@ -151,12 +151,11 @@ nav .right {
   box-shadow: 0 0 0 2px #bfa7a0;
 }
 
-
-.forgot{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    cursor: pointer;
+.forgot {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
 }
 
 .buttons {
@@ -164,7 +163,6 @@ nav .right {
   justify-content: space-between;
   margin-top: 25px;
   width: 100%;
-  
 }
 
 .buttons #signup-button {
@@ -220,13 +218,14 @@ nav .right {
 
   .info {
     width: 100%;
-    min-height: 300px;
+    min-height: 200px;
     height: auto;
     margin-bottom: 20px;
   }
 
   .main form {
     width: 100%;
+    min-height: 500px;
     padding: 0px;
   }
 
@@ -234,16 +233,31 @@ nav .right {
     width: 100%;
   }
 
+.signup label {
+  font-size: 14px;
+}
+
+.signup input {
+  height: 40px;
+}
+
   .buttons #login-button {
     font-size: 16px;
   }
 
   nav .left h1 {
     font-family: "Climate Crisis", sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     color: #42242a;
     letter-spacing: 2px;
     margin-left: 30px;
+  }
+
+  .right h2 {
+    font-family: "Space Mono", monospace;
+    font-size: 16px;
+    color: #42242a;
+    margin-right: 20px;
   }
 
   .info h1 {
@@ -260,6 +274,11 @@ nav .right {
     color: #42242a;
     padding-left: 4px;
     translate: 0 -10px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
+  }
+
+  .signup h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
   }
 }

@@ -81,7 +81,6 @@ nav .right {
   display: none;
 }
 
-
 #search {
   width: 40px;
   height: 40px;
@@ -242,7 +241,7 @@ nav .right {
   text-decoration: none;
   border: none;
   transition: background 0.2s, color 0.2s;
-   margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .sidebar-links a[href="/logout"] {
@@ -260,7 +259,6 @@ nav .right {
   text-decoration: none;
   border: none;
   transition: background 0.2s, color 0.2s;
-  
 }
 
 .sidebar-links a[href="/logout"]:hover {
@@ -348,7 +346,6 @@ nav .right {
   margin-top: auto;
 }
 
-
 .datecontainer {
   font-family: "Figtree", sans-serif;
   font-size: 14px;
@@ -424,12 +421,15 @@ nav .right {
 }
 
 @media (max-width: 768px) {
+  nav .left h1 {
+    font-size: 20px;
+  }
 
-   #username {
+  #username {
     display: none;
   }
 
-  #create-post{
+  #create-post {
     display: none;
   }
   #create-post-icon {
@@ -437,11 +437,9 @@ nav .right {
     margin-right: 10px;
   }
 
-  #search{
+  #search {
     margin-right: 10px;
   }
-
-
 
   .actualmain {
     flex-direction: column;
@@ -581,10 +579,9 @@ nav .right {
     grid-template-columns: repeat(1, 1fr);
   }
 
-  nav{
+  nav {
     z-index: 1000;
   }
-
 
   .hacks {
     height: 120px;
@@ -592,20 +589,18 @@ nav .right {
   }
 
   #profile-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  object-fit: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #42242a;
-  margin-right: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #42242a;
+    margin-right: 5px;
+  }
 }
- 
-}
-
 
 .post-image img {
   width: 100%;

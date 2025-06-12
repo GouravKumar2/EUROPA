@@ -389,6 +389,11 @@ nav .right {
 
 
 @media (max-width: 1080px) {
+
+  nav .left h1 {
+    font-size: 20px;
+  }
+  
   #username {
     display: none;
   }

@@ -364,10 +364,10 @@ nav .left h1 {
   font-family: "Figtree", sans-serif;
   padding: 8px 10px;
   border-radius: 30px;
-  font-size: 10px;
+  font-size: 8px;
   background-color: #69444b;
   color: #e7e4de;
-  margin-left: 5px;
+  margin-left: 3px;
   cursor: pointer;
 }
 
@@ -375,19 +375,19 @@ nav .left h1 {
   font-family: "Figtree", sans-serif;
   padding: 6px 8px;
   border-radius: 30px;
-  font-size: 10px;
+  font-size: 8px;
   color: #69444b;
   border: 2px solid #69444b;
-  margin-left: 10px;
+  margin-left: 5px;
   cursor: pointer;
 }
 
 nav .left h1 {
   font-family: "Climate Crisis", sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   color: #42242a;
   letter-spacing: 0px;
-  margin-left: 15px;
+  margin-left: 10px;
 }
 
 
@@ -395,10 +395,10 @@ nav .left h1 {
  font-family: "Figtree", sans-serif;
   padding: 8px 10px;
   border-radius: 30px;
-  font-size: 10px;
+  font-size: 8px;
   background-color: #69444b;
   color: #e7e4de;
-  margin-left: 10px;
+  margin-left: 5px;
   cursor: pointer;
 }
 
@@ -406,10 +406,10 @@ nav .left h1 {
   font-family: "Figtree", sans-serif;
   padding: 6px 8px;
   border-radius: 30px;
-  font-size: 10px;
+  font-size: 8px;
   color: #69444b;
   border: 2px solid #69444b;
-  margin-left: 5px;
+  margin-left: 3px;
   cursor: pointer;
 }
 

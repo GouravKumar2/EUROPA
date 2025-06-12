@@ -261,6 +261,7 @@ nav .right {
 
 
 @media (max-width: 720px) {
+
   #username {
     display: none;
   }
@@ -315,7 +316,7 @@ nav .right {
 
 nav .left h1 {
   font-family: "Climate Crisis", sans-serif;
-  font-size: 15px;
+  font-size: 20px;
   color: #42242a;
   letter-spacing: 0px;
   margin-left: 15px;

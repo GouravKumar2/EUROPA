@@ -249,6 +249,11 @@ nav .right {
 }
 
 @media (max-width: 1080px) {
+
+  nav .left h1 {
+    font-size: 20px;
+  }
+
   .main form {
     width: 95%;
   }
@@ -280,5 +285,19 @@ nav .right {
   align-items: center;
   background-color: #42242a;
   margin-right: 5px;
+  }
+
+  .sidebar {
+    padding-left: 15px;
+    padding-right: 15px;
+   
+  }
+
+  .icon-input label{
+    font-size: 12px;
+  }
+
+  .icon-input input {
+    width: 100%;
   }
 }

@@ -2,6 +2,8 @@
 
 EUROPA is a full-featured social media web application built with Node.js, Express, MongoDB, and EJS. It allows users to create posts, follow others, like and comment on posts, customize their profiles, and search for users in real time. The app features a modern, responsive UI and supports image uploads via Cloudinary.
 
+Checkout the app at: https://europa-e570.onrender.com
+
 ## Features
 
 - **User Authentication**: Secure signup, login, and JWT-based session management.
